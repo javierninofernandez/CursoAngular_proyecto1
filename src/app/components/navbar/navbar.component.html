@@ -1,0 +1,67 @@
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <!-- Logo o Marca -->
+            <p class="navbar-brand mb-0">
+                <img src="favicon.ico" alt="Logo" width="30" height="24" class="d-inline-block align-text-top me-2">
+                {{ titulo }}
+            </p>
+
+            <!-- Botón Hamburguesa para dispositivos móviles -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Elementos del menú colapsable -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+
+                    <!-- Elementos del menú estaticos -->
+                    <!-- <li class="nav-item">
+                        <a [routerLink]="['/home']" class="nav-link" [routerLinkActive]="'active'">Inicio</a>                        
+                    </li>
+                    <li class="nav-item">
+                        <a [routerLink]="['/dashboard']" class="nav-link" [routerLinkActive]="'active'">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a [routerLink]="['/prueba']" class="nav-link" [routerLinkActive]="'active'">Contador</a>   
+                    </li> -->
+
+                    <!-- Elementos del menú dinamicos -->
+                    @for (menuItem of listaRutas; track menuItem.titulo) {
+                        <li class="nav-item">
+                            <a class="nav-link d-flex align-items-center"
+                                [class.disabled]="menuItem.isDisabled"
+                                [attr.aria-disabled]="menuItem.isDisabled" 
+                                [routerLink]="[menuItem.isDisabled ? null : menuItem.path]"  
+                                [routerLinkActive]="'active'" 
+                                [routerLinkActiveOptions]="{exact: true}"
+                            >
+                                <i class="{{menuItem.icono}}"></i>
+                                {{ menuItem.titulo }}
+                            </a>
+                        </li>
+                    }
+
+                    <!--Explicación de la directiva @for y los atributos de routerLink-->
+                    <!--
+                        @for: recorre los elementos de listaRutas.
+                        track menuItem.titulo: identifica cada elemento mediante su título.
+                        [routerLink]: navega a la ruta especificada.
+                        routerLinkActive="active": aplica la clase active cuando la ruta está activa.
+                        [routerLinkActiveOptions]="{ exact: true }": exige que la ruta coincida exactamente.                                           
+                    -->
+                   
+                </ul>
+
+                <!-- Botón Salir -->
+                <button 
+                    type="button" 
+                    class="btn btn-outline-light ms-4"
+                    (click)="salir()">
+                    <i class="bi bi-box-arrow-right me-1"></i>
+                    Salir
+                </button>
+            </div>
+        </div>
+    </nav>

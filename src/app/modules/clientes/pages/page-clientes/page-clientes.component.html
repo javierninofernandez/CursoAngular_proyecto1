@@ -1,0 +1,23 @@
+<!-- Incluimos el componente Navbar -->
+<app-navbar></app-navbar>
+
+<!-- Incluimos el componente Header -->
+<app-header [titulo]="'Gestion de Clientes'"></app-header>
+
+<!-- Contenido Principal de la Página -->
+<main class="flex-grow-1">
+    <div class="row mt-1 px-2">
+        <!-- <p>Empresa Seleccionada: {{ inputEmpresaSeleccionada()?.nombre }}</p> -->
+        <!-- lista cientes -->
+        <div class="col-6">
+            <app-lista-cliente (empresaSeleccionada)="seleccionarEmpresa($event)"></app-lista-cliente>
+        </div>
+        <!-- ficha cliente -->
+        <div class="col-6">
+            <app-ficha-cliente [empresaSeleccionada]="inputEmpresaSeleccionada()"></app-ficha-cliente>
+        </div>
+    </div>
+</main>
+
+<!-- Incluimos el componente Footer -->
+<app-footer></app-footer>

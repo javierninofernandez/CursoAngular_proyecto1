@@ -1,0 +1,28 @@
+<section class="px-3 mx-2">
+    <table class="tabla-empresas">
+    <thead>
+        <tr>
+        <th>Código</th>
+        <th>Nombre</th>
+        <th>NIF</th>
+        <th>Calle</th>
+        <th>Número</th>
+        <th>Provincia</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <!-- @for (empresa of servicioCientes.getListaEmpresas(); track $index) { -->
+        @for (empresa of listaEmpresas; track $index) {
+        <tr (click)="seleccionarEmpresa(empresa)">
+            <td>{{ empresa.codigo }}</td>
+            <td>{{ empresa.nombre }}</td>
+            <td>{{ empresa.nif }}</td>
+            <td>{{ empresa.direccion.calle }}</td>
+            <td>{{ empresa.direccion.numero }}</td>
+            <td>{{ empresa.direccion.provincia }}</td>
+        </tr>
+        }
+    </tbody>
+    </table>   
+</section>

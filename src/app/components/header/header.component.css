@@ -1,0 +1,13 @@
+nav {
+    height: 40px;
+    background-color: #c9cff5;
+}
+
+a {
+    padding:0px 5px
+}
+
+.activado {
+    font-weight: bold;
+    color: white;
+}

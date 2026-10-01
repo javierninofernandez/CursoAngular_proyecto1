@@ -1,0 +1,99 @@
+
+<div class="mt-4">
+
+    <div class="card shadow-sm">
+
+        <div class="card-header bg-primary text-white">
+        <h4 class="mb-0">
+            Datos de la empresa
+        </h4>
+        </div>
+
+        <div class="card-body">
+
+        <div class="row">
+            @if (empresaSeleccionada(); as empresa) {
+            <!-- Código -->
+            <div class="col-md-12 mb-3">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Código</label>
+                        <div class="form-control bg-light">
+                            {{ empresa.codigo }}
+                        </div>
+                    </div>
+
+                    <!-- Nombre -->
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Nombre</label>
+                        <div class="form-control bg-light">
+                            {{ empresa.nif }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 mb-3">
+                    <!-- NIF -->
+                    <div class="col-md-12">
+                        <label class="form-label fw-bold">NIF</label>
+                        <div class="form-control bg-light">                            
+                            {{ empresa.nombre }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
+            <h5 class="mb-3">Dirección</h5>
+
+            <div class="row">
+
+                    <!-- Calle -->
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Calle</label>
+                        <div class="form-control bg-light">
+                            {{ empresa.direccion.calle }}
+                        </div>
+                    </div>
+
+                    <!-- Número -->
+                    <div class="col-md-2 mb-3">
+                    <label class="form-label fw-bold">Número</label>
+                    <div class="form-control bg-light">
+                        {{ empresa.direccion.numero }}
+                    </div>
+                    </div>
+
+                    <!-- Provincia -->
+                    <div class="col-md-4 mb-3">
+                    <label class="form-label fw-bold">Provincia</label>
+                    <div class="form-control bg-light">
+                        {{ empresa.direccion.provincia }}
+                    </div>
+                    </div>
+
+            </div>
+
+            } @else {
+                <p>Selecciona una empresa para ver sus datos.</p>
+            }
+
+        </div>
+
+        </div>
+
+        <!-- <div class="card-footer text-end">
+        <button class="btn btn-secondary">
+            Volver
+        </button>
+
+        <button class="btn btn-primary ms-2">
+            Editar
+        </button>
+        </div> -->
+
+    </div>
+
+</div>
+
+
