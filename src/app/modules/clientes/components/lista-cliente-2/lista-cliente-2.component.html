@@ -109,25 +109,3 @@
 
     </table>   
 </section>
-
-<!-- seccion para ver la aplicacion de ngTemplate -->
-<section class="mx-4 pt-4">    
-    @if ((empresaSeleccionada) && (empresaSeleccionada.estado!=estadoCliente.Baja)){
-        <ng-template [ngTemplateOutlet]="pedidosCliente"></ng-template>
-    }
-    @else {
-        <ng-template [ngTemplateOutlet]="infoBaja"></ng-template>
-    }
-
-</section>
-
-
-<ng-template #pedidosCliente>
-    <h4>Plantilla Pedidos Cliente</h4>
-    <p>Aqui se muestran los datos de los pedidos del cliente</p>
-</ng-template>
-
-<ng-template #infoBaja>
-    <h4 class="cliente-baja">Plantilla cliente de baja</h4>
-    <p>Template con un contenido diferente para los clientes de baja</p>
-</ng-template>

@@ -6,6 +6,7 @@ import { EjemploComponent } from './pages/ejemplo/ejemplo.component';
 //import { ListaClienteComponent } from './modules/clientes/components/lista-cliente/lista-cliente.component';
 import { PageClientesComponent } from './modules/clientes/pages/page-clientes/page-clientes.component';
 import { PageListaClientesComponent } from './modules/clientes/pages/page-lista-clientes/page-lista-clientes.component';
+import { ListaCliente2Component } from './modules/clientes/components/lista-cliente-2/lista-cliente-2.component';
 
 
 export const routes: Routes = [
@@ -15,6 +16,7 @@ export const routes: Routes = [
     { path: 'prueba', component: EjemploComponent },
 
     { path: 'lista-clientes', component: PageListaClientesComponent },
+    { path: 'lista-clientes2', component: ListaCliente2Component },
     { path: 'clientes', component: PageClientesComponent },
 
     //{ path:'**', component:NotFoundComponent},

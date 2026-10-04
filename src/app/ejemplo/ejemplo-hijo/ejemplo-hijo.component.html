@@ -1,0 +1,38 @@
+<h4 class="mt-1 px-2">Lista de Cliente</h4>
+
+
+<section class="px-2 mx-2">
+    <table class="tabla-empresas">
+    <thead>
+        <tr>
+        <th>Texto recibido del padre</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td>texto padre: </td>
+        </tr>
+    </tbody>
+    </table>   
+</section>
+
+
+<section class="row">
+  <div class="col-12 col-sm-6">
+    <h3>Pasar a Padre</h3>
+
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Nombre"
+      [value]="datos()"
+      (input)="datos.set(txtName.value)"
+      #txtName
+    />
+
+    <button (click)="enviarAlPadre()" class="mt-2 btn btn-primary">
+      Agregar
+    </button>
+  </div>
+</section>

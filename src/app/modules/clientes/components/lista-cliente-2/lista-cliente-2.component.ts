@@ -1,25 +1,22 @@
 /*
-lista-cliente.componente : Ejemplo de lista empresas gestionadas directamente en un array 
+lista-cliente-2.componente : Reutilizacion de lista-cliente para aplicar el uso de Servicios
 - Objetivo:
-- Creacion del componente a traves de plantillas html y css
-- Aplicar el uso de las principales directivas angular @for, @if, @switch, [ngModel], [ngClass]
-- Introduccion al paso de parametros componente padre con output / @Output
-- Depuracion: console.log / console.table + depuracion con VsCode
+- Introduccion a los servicios de Angular para encapsular la gestión de datos
 */
-
-import { Component, output } from '@angular/core';
-import { Empresa, EstadoCliente } from '../../models/cliente.model';
-import { NgClass, NgTemplateOutlet, UpperCasePipe } from "@angular/common";
+import { Component, output, inject } from '@angular/core';
+import { Empresa,EstadoCliente } from '../../models/cliente.model';
+import { ClientesService } from '../../services/clientes.service';
+import { NgClass, UpperCasePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-lista-cliente',
-  imports: [NgClass, UpperCasePipe, FormsModule, NgTemplateOutlet],
-  templateUrl: './lista-cliente.component.html',
-  styleUrl: './lista-cliente.component.css'
+  selector: 'app-lista-cliente-2',
+  imports: [NgClass, FormsModule, UpperCasePipe],
+  templateUrl: './lista-cliente-2.component.html',
+  styleUrl: './lista-cliente-2.component.css'
 })
-export class ListaClienteComponent {
-    
+export class ListaCliente2Component {
+
     public readonly estadoCliente = EstadoCliente; // Para poder usar el enumerado en la plantilla HTML
 
     // Gestion de comunicacion con el padre -> 

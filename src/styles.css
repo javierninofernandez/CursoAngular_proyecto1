@@ -16,3 +16,16 @@ router-outlet + * {
     flex-direction: column;
     flex: 1;
 }
+
+
+.cliente-activo {
+    color: green;
+}
+
+.cliente-inactivo {
+    color: orange;
+}
+
+.cliente-baja {
+    color: red;
+}
