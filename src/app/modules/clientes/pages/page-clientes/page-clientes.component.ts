@@ -14,7 +14,7 @@ import { Empresa } from "../../models/cliente.model";
 })
 export class PageClientesComponent {
 
-  
+
   // Declaración de la señal para recibir la empresa seleccionada desde ListaClienteComponent
   inputEmpresaSeleccionada =  signal<Empresa | null>(null);
 

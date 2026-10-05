@@ -1,6 +1,8 @@
 <section class="px-3 mx-2">
 
-    <div class="row py-2">
+    <!-- lo movemos al padre para el ejemplo de comunicación -->
+    <!-- 
+    <div class="row py-2">        
         <div class="col-auto"><b>Cliente Seleccionado</b></div>
         <div class="col">{{empresaSeleccionada?.codigo | uppercase }} - {{ empresaSeleccionada?.nombre | uppercase}}</div>
         <div class="col-2 text-end">
@@ -8,11 +10,13 @@
                 <input type="checkbox" class="mx-1"  name="checkBajas" #checkBajas value=true [(ngModel)]="filtrarBajas">Mostrar Bajas
             </label>
         </div>
-    </div>
+    </div> 
+    -->
 
     <table class="tabla-empresas">
     <thead>
         <tr>
+        <th>ID</th>            
         <th>Código</th>
         <th>Nombre</th>
         <th>NIF</th>
@@ -30,33 +34,14 @@
             @if ((!filtrarBajas) || (filtrarBajas && empresa.estado!=estadoCliente.Baja)) {
             <!-- Usando [ngClass]-->    
             <tr (click)="seleccionarEmpresa(empresa)">
+                <td>{{ empresa.id }}</td>
                 <td>{{ empresa.codigo }}</td>
                 <td>{{ empresa.nombre }}</td>
                 <td>{{ empresa.nif }}</td>
-
-                <!--  Uso de [ngClass] estandar si la propiedad es un string -->
-                <!-- 
-                <td [ngClass]="{'cliente-activo': empresa.estado === 'Activo', 'cliente-inactivo': empresa.estado === 'Inactivo', 'cliente-baja': empresa.estado === 'Baja'}">
-                    {{ empresa.estado }}
-                </td>
-                -->
-
                 <!-- con enum necesitamos crear una propiedad en el modelo para manejar las clases CSS (en este ejemplo estadoCliente:EstadoCliente)-->
                 <td [ngClass]="{'cliente-activo': empresa.estado === estadoCliente.Activo, 'cliente-inactivo': empresa.estado === estadoCliente.Inactivo, 'cliente-baja': empresa.estado === estadoCliente.Baja}">
                     {{ empresa.estado }}
                 </td>
-
-                <!--  opcion con el uso de @switch para seleccionar el estado -->
-                <!-- 
-                <td>
-                    @switch (empresa.estado) {
-                        @case (estadoCliente.Activo) { <span class="cliente-activo">{{ empresa.estado }}</span> }
-                        @case (estadoCliente.Inactivo) { <span class="cliente-inactivo">{{ empresa.estado }}</span> }
-                        @case (estadoCliente.Baja) { <span class="cliente-baja">{{ empresa.estado }}</span> }
-                        @default { {{ empresa.estado }} }
-                    }
-                </td>
-                -->
                 <td>{{ empresa.direccion.calle }}</td>
                 <td>{{ empresa.direccion.numero }}</td>
                 <td>{{ empresa.direccion.provincia }}</td>
@@ -99,7 +84,7 @@
                         (click)="eliminarEmpresa(empresa); $event.stopPropagation()">
                         <i class="bi bi-trash"></i>
                     </button>
-                </td>    
+                </td>  
             
             </tr>        
                 
@@ -109,25 +94,3 @@
 
     </table>   
 </section>
-
-<!-- seccion para ver la aplicacion de ngTemplate -->
-<section class="mx-4 pt-4">    
-    @if ((empresaSeleccionada) && (empresaSeleccionada.estado!=estadoCliente.Baja)){
-        <ng-template [ngTemplateOutlet]="pedidosCliente"></ng-template>
-    }
-    @else {
-        <ng-template [ngTemplateOutlet]="infoBaja"></ng-template>
-    }
-
-</section>
-
-
-<ng-template #pedidosCliente>
-    <h4>Plantilla Pedidos Cliente</h4>
-    <p>Aqui se muestran los datos de los pedidos del cliente</p>
-</ng-template>
-
-<ng-template #infoBaja>
-    <h4 class="cliente-baja">Plantilla cliente de baja</h4>
-    <p>Template con un contenido diferente para los clientes de baja</p>
-</ng-template>

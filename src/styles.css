@@ -18,6 +18,36 @@ router-outlet + * {
 }
 
 
+/* css para los ejemplos de gestión de clientes (listas -> se trae de los .css de los componentes al general para que este disponible en toda la aplicacion */
+
+.tabla-empresas {
+  width: 100%;
+  border-collapse: collapse;
+  padding: 0px 20px;
+}
+
+/* Espaciado entre columnas */
+.tabla-empresas th,
+.tabla-empresas td {
+  padding: 12px 20px;
+  text-align: left;
+}
+
+/* Línea separadora horizontal */
+.tabla-empresas tbody tr {
+  border-bottom: 1px solid #ddd;
+}
+
+/* Línea debajo de las cabeceras */
+.tabla-empresas thead tr {
+  border-bottom: 2px solid #333;
+}
+
+/* Efecto al pasar el ratón */
+.tabla-empresas tbody tr:hover {
+  background-color: #f5f5f5;
+}
+
 .cliente-activo {
     color: green;
 }

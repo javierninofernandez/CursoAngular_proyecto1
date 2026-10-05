@@ -33,30 +33,10 @@
                 <td>{{ empresa.codigo }}</td>
                 <td>{{ empresa.nombre }}</td>
                 <td>{{ empresa.nif }}</td>
-
-                <!--  Uso de [ngClass] estandar si la propiedad es un string -->
-                <!-- 
-                <td [ngClass]="{'cliente-activo': empresa.estado === 'Activo', 'cliente-inactivo': empresa.estado === 'Inactivo', 'cliente-baja': empresa.estado === 'Baja'}">
-                    {{ empresa.estado }}
-                </td>
-                -->
-
                 <!-- con enum necesitamos crear una propiedad en el modelo para manejar las clases CSS (en este ejemplo estadoCliente:EstadoCliente)-->
                 <td [ngClass]="{'cliente-activo': empresa.estado === estadoCliente.Activo, 'cliente-inactivo': empresa.estado === estadoCliente.Inactivo, 'cliente-baja': empresa.estado === estadoCliente.Baja}">
                     {{ empresa.estado }}
                 </td>
-
-                <!--  opcion con el uso de @switch para seleccionar el estado -->
-                <!-- 
-                <td>
-                    @switch (empresa.estado) {
-                        @case (estadoCliente.Activo) { <span class="cliente-activo">{{ empresa.estado }}</span> }
-                        @case (estadoCliente.Inactivo) { <span class="cliente-inactivo">{{ empresa.estado }}</span> }
-                        @case (estadoCliente.Baja) { <span class="cliente-baja">{{ empresa.estado }}</span> }
-                        @default { {{ empresa.estado }} }
-                    }
-                </td>
-                -->
                 <td>{{ empresa.direccion.calle }}</td>
                 <td>{{ empresa.direccion.numero }}</td>
                 <td>{{ empresa.direccion.provincia }}</td>
@@ -67,18 +47,18 @@
                     <button
                         type="button"
                         class="btn btn-outline-success btn-sm mx-1"
-                        title="Marcar como inactiva"
+                        title="Activar Empresa"
                         [disabled]="empresa.estado==estadoCliente.Activo"
-                        (click)="desactivarEmpresa(empresa); $event.stopPropagation()">
+                        (click)="activarEmpresa(empresa); $event.stopPropagation()">
                         <i class="bi bi-person-down"></i>
                     </button>                                             
                     <!-- Marcar como Inactiva -->
                     <button
                         type="button"
                         class="btn btn-outline-warning btn-sm mx-1"
-                        title="Activar Empresa"
+                        title="Marcar como inactiva"
                         [disabled]="empresa.estado==estadoCliente.Inactivo"
-                        (click)="activarEmpresa(empresa); $event.stopPropagation()">
+                        (click)="desactivarEmpresa(empresa); $event.stopPropagation()">
                         <i class="bi bi-person-up"></i>
                     </button>
                     <!-- Dar de baja -->
@@ -87,7 +67,7 @@
                         class="btn btn-outline-danger btn-sm mx-1"
                         title="Dar de baja"
                         [disabled]="empresa.estado==estadoCliente.Baja"
-                        (click)="cambiarEstado(empresa,estadoCliente.Baja); $event.stopPropagation()">
+                        (click)="cambiarEstado(empresa,estadoCliente.Baja);">
                         <i class="bi bi-arrow-down-square"></i>
                     </button>                
                     <!-- Eliminar -->
@@ -99,7 +79,7 @@
                         (click)="eliminarEmpresa(empresa); $event.stopPropagation()">
                         <i class="bi bi-trash"></i>
                     </button>
-                </td>    
+                </td>  
             
             </tr>        
                 

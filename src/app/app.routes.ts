@@ -3,10 +3,11 @@ import { HomeComponent } from './pages/home/home.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 //import { AppComponent } from './app.component';
 import { EjemploComponent } from './pages/ejemplo/ejemplo.component';
-//import { ListaClienteComponent } from './modules/clientes/components/lista-cliente/lista-cliente.component';
-import { PageClientesComponent } from './modules/clientes/pages/page-clientes/page-clientes.component';
 import { PageListaClientesComponent } from './modules/clientes/pages/page-lista-clientes/page-lista-clientes.component';
-import { ListaCliente2Component } from './modules/clientes/components/lista-cliente-2/lista-cliente-2.component';
+//import { ListaClienteFinalComponent } from './modules/clientes/components/lista-cliente-final/lista-cliente-final.component';
+import { PageListaClienteFinalComponent } from './modules/clientes/pages/page-lista-cliente-final/page-lista-cliente-final.component';
+import { PageClientesComponent } from './modules/clientes/pages/page-clientes/page-clientes.component';
+
 
 
 export const routes: Routes = [
@@ -16,7 +17,8 @@ export const routes: Routes = [
     { path: 'prueba', component: EjemploComponent },
 
     { path: 'lista-clientes', component: PageListaClientesComponent },
-    { path: 'lista-clientes2', component: ListaCliente2Component },
+    //{ path: 'lista-clientes-final', component: ListaClienteFinalComponent },
+    { path: 'lista-clientes-final', component: PageListaClienteFinalComponent },
     { path: 'clientes', component: PageClientesComponent },
 
     //{ path:'**', component:NotFoundComponent},

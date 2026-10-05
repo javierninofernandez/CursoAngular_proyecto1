@@ -29,8 +29,9 @@ export class NavbarComponent {
     { titulo: 'Dashboard', path: '/dashboard', icono: 'bi bi-easel-fill mx-1 mx-1', hint: 'Ver el panel de control', isDisabled: false },
     //{ titulo: 'Contador', path: '/prueba', icono: 'bi bi-123 mx-1 mx-1', hint: 'Ver el panel de control' },
     { titulo: 'Ejemplo', path: '/prueba', icono: '<i class="bi bi-hexagon-fill"></i>', hint: 'prueba', isDisabled: true },
-    { titulo: 'Lista de Clientes', path: '/lista-clientes', icono: 'bi bi-people-fill mx-1', hint: 'Ver la lista de clientes', isDisabled: false },
-    { titulo: 'Clientes', path: '/clientes', icono: 'bi bi-people-fill mx-1', hint: 'Gestión de clientes', isDisabled: false },
+    { titulo: 'Lista Clientes', path: '/lista-clientes', icono: 'bi bi-people-fill mx-1', hint: 'Ver la lista de clientes', isDisabled: false },
+    { titulo: 'Lista Clientes Final', path: '/lista-clientes-final', icono: 'bi bi-people-fill mx-1', hint: 'Ver la lista de clientes', isDisabled: false },
+    { titulo: 'Ficha Cliente', path: '/clientes', icono: 'bi bi-people-fill mx-1', hint: 'Gestión de clientes', isDisabled: false },
   ];
 
 

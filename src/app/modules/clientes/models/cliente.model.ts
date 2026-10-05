@@ -28,3 +28,14 @@ export interface Direccion {
 }
 
 //endregion
+
+// definicion alternativa de clientes para el uso de la API -> Añadimos un id
+
+export interface ClienteAPI {
+  id: number;
+  codigo: string;
+  nombre: string;
+  nif: string;
+  estado: EstadoCliente;
+  direccion: Direccion
+}

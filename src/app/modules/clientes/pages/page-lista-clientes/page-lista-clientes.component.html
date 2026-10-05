@@ -7,7 +7,14 @@
 <!-- Contenido Principal de la Página -->
 <main class="flex-grow-1">
     <div class="mt-1 px-2">
-        <app-lista-cliente></app-lista-cliente>
+        <!-- <app-lista-cliente></app-lista-cliente> -->
+        @if (usarServicio) {
+            <p>Usando ClientesService</p>
+            <app-lista-cliente-2></app-lista-cliente-2>
+        }
+        @else {            
+            <app-lista-cliente></app-lista-cliente>
+        }        
     </div>
 </main>
 

@@ -4,6 +4,7 @@ lista-cliente.componente : Ejemplo de lista empresas gestionadas directamente en
 - Creacion del componente a traves de plantillas html y css
 - Aplicar el uso de las principales directivas angular @for, @if, @switch, [ngModel], [ngClass]
 - Introduccion al paso de parametros componente padre con output / @Output
+- Gestion de eventos (click)="metodoGEstion($event, parametrosAdicionales); opcional $event.stopPropagation()""
 - Depuracion: console.log / console.table + depuracion con VsCode
 */
 
@@ -25,17 +26,10 @@ export class ListaClienteComponent {
     // Gestion de comunicacion con el padre -> 
     // @Output() empresaSeleccionada: Empresa | null = null;  // version tradicional
     outEmpresaSeleccionada = output<Empresa>();
-    
-    empresaSeleccionada: Empresa | null = null
-    
+
+    //#region - declaracion de variables internas del componente
     filtrarBajas: boolean = false;
-    // tradicional
-    //constructor(public clienteService: ClienteService) {}
-  
-    // recomendada en las ultimas versiones
-    //public servicioCientes = inject(ClienteService);
-  
-    //empresaSeleccionada: Empresa | null = null;
+    empresaSeleccionada: Empresa | null = null
 
     listaEmpresas: Empresa[] = [
           { codigo: 'COD-260001',
@@ -77,26 +71,40 @@ export class ListaClienteComponent {
               numero: 84,
               provincia: 'Madrid'
             }
-          }
+          },
+          { codigo: 'COD-ELIMINAR',
+            nombre: 'Empresa Eliminar',
+            nif: '11111111-D',
+            estado: EstadoCliente.Baja,
+            direccion: {
+              calle: 'Goya',
+              numero: 84,
+              provincia: 'Madrid'
+            }
+          }          
       ];
-  
+    
+    //#endregion 
+
+
     ngOnInit(): void {
-      //this.getListaEmpresas();
-      //this.empresaSeleccionada = this.listaEmpresas[0]; // Selecciona la primera empresa por defecto;
       if (this.listaEmpresas.length > 0) { 
          this.seleccionarEmpresa(this.listaEmpresas[0]); // Selecciona la primera empresa por defecto 
       }
     }
-  
-    // getListaEmpresas(){
-    //   this.listaEmpresas = this.servicioCientes.getListaEmpresas();
-    // }
-
+    
     seleccionarEmpresa(empresa: Empresa) {
-      console.log('Empresa seleccionada:', empresa);
+      // ejemplo de console.log / console.table /alert
+      console.log('Empresa seleccionda:',empresa);      // Muestra la informacion de la lista de clientes en la consola
+      console.table(empresa);                           // Muestra la lista clientes en la consola en formato de tabla
+      console.table(empresa, ['codigo','nombre']);      // Filtrar: Muestra solo las columnas 'codigo','nombre' de la tabla      
+      // seleccion de empresa
       this.empresaSeleccionada = empresa;
       this.outEmpresaSeleccionada.emit(empresa);
     }
+
+
+    //#region - gestion de botones    
 
     desactivarEmpresa(empresa: Empresa): void {
       // Lógica para cambiar el estado a Baja
@@ -111,26 +119,29 @@ export class ListaClienteComponent {
     }    
 
     bajaEmpresa(empresa: Empresa): void {      
+      console.log('Dar de baja:', empresa);   
       // Lógica para cambiar el estado a Baja
-      console.log('Dar de baja:', empresa);     
       this.cambiarEstado(empresa,this.estadoCliente.Baja);
     }
 
     cambiarEstado(empresa:Empresa, newEstado:EstadoCliente): void {
-      alert('Cambiar Estado');
       let index:number = this.listaEmpresas.findIndex( (cl) => cl.codigo == empresa.codigo );      
       if (index >=0 ) {
-        alert('CAMBIO ESTADO: Estado Anterior:'+this.listaEmpresas[index].estado+' -> Nuevo Estado:'+newEstado);
+        console.log('CAMBIO ESTADO: Estado Anterior:'+this.listaEmpresas[index].estado+' -> Nuevo Estado:'+newEstado);
         this.listaEmpresas[index].estado = newEstado;
       }
     }
 
-    eliminarEmpresa(empresa: Empresa): void {
-      // Lógica para eliminar
-      console.log('Eliminar:', empresa);
+    eliminarEmpresa(empresa: Empresa): void {      
+      alert('Eliminar Empresa');      
+      // Lógica para eliminar      
+      let index:number = this.listaEmpresas.findIndex( (cl) => cl.codigo == empresa.codigo );      
+      if (index >=0 ) {
+        console.log('Eliminar:', empresa);
+        this.listaEmpresas.splice(index,1);
+      }      
     }    
 
-    filtrarLista(){
+    //#endregion
 
-    }
 }

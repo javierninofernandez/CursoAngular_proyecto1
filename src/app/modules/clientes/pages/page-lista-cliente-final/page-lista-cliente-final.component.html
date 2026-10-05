@@ -1,0 +1,26 @@
+<!-- Incluimos el componente Navbar -->
+<app-navbar></app-navbar>
+
+<!-- Incluimos el componente Header -->
+<app-header [titulo]="'Lista de Clientes - API'"></app-header>
+
+<!-- Contenido Principal de la Página -->
+<main class="flex-grow-1">
+    <div class="row py-2 mx-4">
+        <div class="col-auto"><b>Cliente Seleccionado</b></div>
+        <div class="col">{{empresaSeleccionada?.codigo | uppercase }} - {{ empresaSeleccionada?.nombre | uppercase}}</div>
+        <div class="col-2 text-end">
+            <label>
+                <input type="checkbox" class="mx-1"  name="checkBajas" #checkBajas value=true [(ngModel)]="filtrarBajas">Mostrar Bajas
+            </label>
+        </div>
+    </div>        
+
+    <div class="mt-1 px-2">
+        <app-lista-cliente-final></app-lista-cliente-final>
+    </div>
+</main>
+
+<!-- Incluimos el componente Footer -->
+<app-footer></app-footer>
+

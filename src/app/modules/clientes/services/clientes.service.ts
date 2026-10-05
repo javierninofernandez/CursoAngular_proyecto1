@@ -8,7 +8,7 @@ export class ClientesService {
 
   // declaración de la lista de clientes
   // listaClientes: Empresa[] = []; -> Para inicializarla con la lista vacia
-  listaClientes: Empresa[] = [
+  listaEmpresas: Empresa[] = [
         { codigo: 'COD-260001',
           nombre: 'Empresa 1',
           nif: '2678984-A',
@@ -48,46 +48,86 @@ export class ClientesService {
             numero: 84,
             provincia: 'Madrid'
           }
-        }
+        },
+          { codigo: 'COD-ELIMINAR',
+            nombre: 'Empresa Eliminar',
+            nif: '11111111-D',
+            estado: EstadoCliente.Baja,
+            direccion: {
+              calle: 'Goya',
+              numero: 84,
+              provincia: 'Madrid'
+            }
+          }          
     ];
   
 
   constructor() { }
 
-  obtenerClientes() {
-    // Aquí puedes implementar la lógica para obtener los clientes desde una API o base de datos
-    // Por ahora, devolveremos un array de ejemplo
-    console.log(this.listaClientes);      // Muestra la informacion de la lista de clientes en la consola
-    console.table(this.listaClientes);    // Muestra la lista clientes en la consola en formato de tabla
-    console.table(this.listaClientes, ['codigo','nombre']);   // Filtrar: Muestra solo las columnas 'codigo','nombre' de la tabla
-    return this.listaClientes
+  obtenerListaClientes():Empresa[] {
+    // retornamos la lista de clientes
+    return this.listaEmpresas
+  }
+
+  obtenerCliente(codigo:string):Empresa | null {
+    // retornamos la información de un cliente
+    let index:number = this.listaEmpresas.findIndex( (cl) => cl.codigo == codigo );      
+    if (index >=0 ) {
+      return this.listaEmpresas[index];
+    }    
+    return null;
   }
   
-  insertarCliente(cliente: any) {
+  //#region - metodos para la gestión de clientes
+
+  desactivarEmpresa(empresa: Empresa): void {
+    // Lógica para cambiar el estado a Baja
+    // Posibles controles
+    this.cambiarEstado(empresa, EstadoCliente.Inactivo);
+  }    
+
+  activarEmpresa(empresa: Empresa): void {
+    // Lógica para cambiar el estado a Baja
+    // Posibles controles
+    this.cambiarEstado(empresa, EstadoCliente.Activo);
+  }    
+
+  bajaEmpresa(empresa: Empresa): void {      
+    // Lógica para cambiar el estado a Baja
+    // Posibles controles
+    this.cambiarEstado(empresa, EstadoCliente.Baja);
+  }
+
+  // funcion general para cambia el estado de una empresa
+  cambiarEstado(empresa:Empresa, newEstado:EstadoCliente): void {  
+  // Aquí puedes implementar la lógica para modificar el estado de un cliente en una API o base de datos (POST)         
+  // Por ahora modificamos el array
+    let index:number = this.listaEmpresas.findIndex( (cl) => cl.codigo == empresa.codigo );      
+    if (index >=0 ) {
+      console.log('CAMBIO ESTADO: Estado Anterior:'+this.listaEmpresas[index].estado+' -> Nuevo Estado:'+newEstado);
+      this.listaEmpresas[index].estado = newEstado;
+    }
+  }
+
+  eliminarEmpresa(empresa: Empresa): void { 
+    // Aquí puedes implementar la lógica para eliminar un cliente en una API o base de datos (POST/DELETE)              
+    // Por ahora modificamos el array    
+    let index:number = this.listaEmpresas.findIndex( (cl) => cl.codigo == empresa.codigo );      
+    if (index >=0 ) {        
+      this.listaEmpresas.splice(index,1);
+      console.log('Empresa Eliminada:', empresa);
+    }      
+  }    
+
+  insertarCliente(cliente: Empresa) {
     // Aquí puedes implementar la lógica para insertar un cliente en una API o base de datos
     // Por ahora, simplemente agregaremos el cliente al array de ejemplo
-    this.listaClientes.push(cliente);
-    console.log('Cliente insertado:', cliente);
-    alert('Cliente insertado: ' + JSON.stringify(cliente));
+    this.listaEmpresas.push(cliente);
+    //alert('Cliente insertado: ' + JSON.stringify(cliente));
+    console.log('Cliente insertado:', cliente);    
   }
-
-  eliminarCliente(clienteId: number) {
-    // Aquí puedes implementar la lógica para eliminar un cliente en una API o base de datos
-    // Por ahora, simplemente eliminaremos el cliente del array de ejemplo
-    this.listaClientes = this.listaClientes.filter(cliente => cliente.codigo !== clienteId.toString());
-    console.log('Cliente eliminado con ID:', clienteId);
-    alert('Cliente eliminado con ID: ' + clienteId);
-  }
-
-  darDeBajaCliente(clienteId: number) {
-    // Aquí puedes implementar la lógica para dar de baja un cliente en una API o base de datos
-    // Por ahora, simplemente marcamos como baja el cliente del array de ejemplo
-    this.listaClientes = this.listaClientes.filter(cliente => cliente.codigo !== clienteId.toString());
-    console.log('Cliente dado de baja con ID:', clienteId);
-    alert('Cliente dado de baja con ID: ' + clienteId);
-  }
-
-
+      
+  //#endregion
 
 }
 ''
