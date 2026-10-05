@@ -4,7 +4,7 @@ lista-cliente-final.componente : version final con servicio de API
 - Cambio para uso de servicios con API (observables)
 - Gestion de parametros de entrada y salida
 */
-import { Component, output, inject } from '@angular/core';
+import { Component, output, input, inject } from '@angular/core';
 import { NgClass, UpperCasePipe } from '@angular/common';
 
 
@@ -23,11 +23,13 @@ export class ListaClienteFinalComponent {
     public readonly estadoCliente = EstadoCliente; // Para poder usar el enumerado en la plantilla HTML
    
     // Gestion de comunicacion con el padre -> 
-    // @Output() empresaSeleccionada: Empresa | null = null;  // version tradicional
-    outEmpresaSeleccionada = output<ClienteAPI>();
-    
+    filtrarBajas = input<boolean>(false);              // verion tradicional @Input() filtrarBajas: boolean = false;
+    outEmpresaSeleccionada = output<ClienteAPI>();  // version tradicional @Output() empresaSeleccionada: Empresa | null = null;  
+
+
     //#region - variables internas del componente
-    filtrarBajas: boolean = false;
+    ///filtrarBajas: boolean = false;
+    
     empresaSeleccionada: ClienteAPI | null = null
     listaEmpresas: ClienteAPI[] = [];    
     //#endregion
@@ -39,8 +41,6 @@ export class ListaClienteFinalComponent {
     // recomendada en las ultimas versiones
     private servicioCientes = inject(ClientesService);
     //#endregion
-
-    //empresaSeleccionada: Empresa | null = null;
 
   
     ngOnInit(): void {

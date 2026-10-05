@@ -2,7 +2,7 @@
 
     <div class="row py-2">
         <div class="col-auto"><b>Cliente Seleccionado</b></div>
-        <div class="col">{{empresaSeleccionada?.codigo | uppercase }} - {{ empresaSeleccionada?.nombre | uppercase}}</div>
+        <div class="col">{{empresaSeleccionada?.codigo?.toUpperCase }} - {{ empresaSeleccionada?.nombre | uppercase}}</div>
         <div class="col-2 text-end">
             <label>
                 <input type="checkbox" class="mx-1"  name="checkBajas" #checkBajas value=true [(ngModel)]="filtrarBajas">Mostrar Bajas
@@ -69,7 +69,7 @@
                         class="btn btn-outline-success btn-sm mx-1"
                         title="Activar Empresa"
                         [disabled]="empresa.estado==estadoCliente.Activo"
-                        (click)="activarEmpresa(empresa); $event.stopPropagation()">
+                        (click)="activarEmpresa(empresa);">
                         <i class="bi bi-person-down"></i>
                     </button>                                             
                     <!-- Marcar como Inactiva -->
@@ -78,7 +78,7 @@
                         class="btn btn-outline-warning btn-sm mx-1"
                         title="Marcar como inactiva"
                         [disabled]="empresa.estado==estadoCliente.Inactivo"
-                        (click)="desactivarEmpresa(empresa); $event.stopPropagation()">
+                        (click)="desactivarEmpresa(empresa);">
                         <i class="bi bi-person-up"></i>
                     </button>
                     <!-- Dar de baja -->
@@ -87,7 +87,7 @@
                         class="btn btn-outline-danger btn-sm mx-1"
                         title="Dar de baja"
                         [disabled]="empresa.estado==estadoCliente.Baja"
-                        (click)="cambiarEstado(empresa,estadoCliente.Baja);">
+                        (click)="cambiarEstado(empresa,estadoCliente.Baja); $event.stopPropagation()">
                         <i class="bi bi-arrow-down-square"></i>
                     </button>                
                     <!-- Eliminar -->

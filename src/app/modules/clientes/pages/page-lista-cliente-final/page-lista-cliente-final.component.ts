@@ -34,9 +34,13 @@ export class PageListaClienteFinalComponent {
 
     // Gestion de comunicacion con el padre -> 
     // @Output() empresaSeleccionada: Empresa | null = null;  // version tradicional
-    outEmpresaSeleccionada = output<Empresa>();
+    //outEmpresaSeleccionada = output<Empresa>();
 
     //#region - declaracion de variables internas del componente
     filtrarBajas: boolean = false;
     empresaSeleccionada: Empresa | null = null
+
+    seleccionarEmpresa(empresa:Empresa){
+      this.empresaSeleccionada = empresa;
+    }
 }
