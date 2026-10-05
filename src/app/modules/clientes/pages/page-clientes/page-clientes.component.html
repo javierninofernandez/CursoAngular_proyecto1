@@ -9,11 +9,11 @@
     <div class="row mt-1 px-2">
         <!-- <p>Empresa Seleccionada: {{ inputEmpresaSeleccionada()?.nombre }}</p> -->
         <!-- lista cientes -->
-        <div class="col-6">
+        <div class="col-8">
             <app-lista-cliente (outEmpresaSeleccionada)="seleccionarEmpresa($event)"></app-lista-cliente>
         </div>
         <!-- ficha cliente -->
-        <div class="col-6">
+        <div class="col-4">
             <app-ficha-cliente [empresaSeleccionada]="inputEmpresaSeleccionada()"></app-ficha-cliente>
         </div>
     </div>
