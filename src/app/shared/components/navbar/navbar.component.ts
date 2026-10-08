@@ -1,8 +1,7 @@
 import { Component,  } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { AsyncPipe } from "@angular/common";
-import { empty } from 'rxjs';
 
+// modelo de datos para gestionar los diferentes items del menu
 interface MenuItem {
   titulo: string;
   path?: string;

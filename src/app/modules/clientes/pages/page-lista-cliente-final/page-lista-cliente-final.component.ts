@@ -7,9 +7,9 @@
 import { Component,output } from '@angular/core';
 import { UpperCasePipe } from "@angular/common";
 import { FormsModule } from '@angular/forms';  // para usar NgModel
-import { NavbarComponent } from '../../../../components/navbar/navbar.component';
-import { HeaderComponent } from "../../../../components/header/header.component";
-import { FooterComponent } from '../../../../components/footer/footer.component';
+import { NavbarComponent } from '../../../../shared/components/navbar/navbar.component';
+import { HeaderComponent } from "../../../../shared/components/header/header.component";
+import { FooterComponent } from '../../../../shared/components/footer/footer.component';
 import { ListaClienteFinalComponent} from "../../components/lista-cliente-final/lista-cliente-final.component";
 import { Empresa,EstadoCliente} from '../../models/cliente.model'
 import { NgModel } from '@angular/forms';

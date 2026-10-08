@@ -9,9 +9,14 @@ import { EmpresaAPI, EstadoCliente } from '../models/cliente.model';
 })
 export class ClientesServiceHttp {
 
+  // inyectar HttpClient para poder usarlo en las llamadas al API
   private readonly http = inject(HttpClient);
 
+  // propiedad/constante interna Para facilitarno la referencia a la URL base de las APIs
   private readonly apiUrl = 'http://localhost:3000/clientes';
+
+
+  //#region - metodos implementados
 
   obtenerListaClientes(): Observable<EmpresaAPI[]> {
     return this.http.get<EmpresaAPI[]>(this.apiUrl);
@@ -49,5 +54,7 @@ export class ClientesServiceHttp {
   eliminarEmpresa(empresa: EmpresaAPI): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${empresa.id}`);
   }
+
+  //#endregion 
 
 }

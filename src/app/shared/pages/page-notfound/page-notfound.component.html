@@ -1,0 +1,27 @@
+<app-header [titulo]="''"></app-header>
+
+<main class="main-content">
+   <ng-template [ngTemplateOutlet]="contenidoNotFound"></ng-template>
+</main>
+
+<app-footer></app-footer>
+
+
+<ng-template #contenidoNotFound>
+   <section class="error-area">
+      <div class="container">
+         <div class="row justify-content-center">
+            <div class="col-xxl-7 col-xl-8 col-lg-8">
+               <div class="error-content text-center">
+                  <span class="error-404">404</span>
+                  <h5 class="sub-title">Page Not Found</h5>
+                  <p class="text">Uppps!! La página solicitada no está disponible</p>
+                  <div class="mt-4">
+                     <button type="button" class="btn btn-outline-primary" (click)="volver()">Volver</button>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+</ng-template>

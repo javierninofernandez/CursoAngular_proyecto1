@@ -1,16 +1,17 @@
 /*
 lista-cliente-final.componente : version final con servicio de API 
-- Objetivo:
-- Cambio para uso de servicios con API (observables)
-- Gestion de parametros de entrada y salida
+- Uso de servicios con API (observables)
+- Gestion de parametros de entrada y salida (Empresa Seleccionada y Filtrar ahora estan en el padre page-lista-clientes-final)
+- Se añaden opciones de editar/insertar
+- Comunicación con componente de la ficha del cliente --> Llamada a una ruta desde typeScript con parametro opcional
 */
+
 import { Component, output, input, inject } from '@angular/core';
-import { NgClass, UpperCasePipe } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { EmpresaAPI,EstadoCliente } from '../../models/cliente.model';
 import { ClientesServiceHttp } from '../../services/clientes.http.service'
-
 
 @Component({
   selector: 'app-lista-cliente-final',
@@ -22,33 +23,44 @@ export class ListaClienteFinalComponent {
 
     public readonly estadoCliente = EstadoCliente; // Para poder usar el enumerado en la plantilla HTML
    
-    // Gestion de comunicacion con el padre -> 
+    // Gestion de comunicacion con el padre 
+    // Entrada input -> del padre al hijo -> Hay que filtrar 
+    // Salida output -> del hijo al padre -> Empresa Seleccionada
     filtrarBajas = input<boolean>(false);              // verion tradicional @Input() filtrarBajas: boolean = false;
-    outEmpresaSeleccionada = output<EmpresaAPI>();  // version tradicional @Output() empresaSeleccionada: Empresa | null = null;  
-
+    outEmpresaSeleccionada = output<EmpresaAPI>();    // version tradicional @Output() empresaSeleccionada: Empresa | null = null;  
 
     //#region - variables internas del componente
-    ///filtrarBajas: boolean = false;
-    
     empresaSeleccionada: EmpresaAPI | null = null
     listaEmpresas: EmpresaAPI[] = [];    
     //#endregion
 
     //#region - inyección del servicio
-    // tradicional
-    //constructor(public clienteService: ClienteService) {}
-    // recomendada en las ultimas versiones
-    private servicioCientes = inject(ClientesServiceHttp);
+    // tradicional --> constructor(public clienteService: ClienteService) {}    
+    private servicioCientes = inject(ClientesServiceHttp);    // recomendada en las ultimas versiones
     //#endregion
 
     //injeccion del router para navegar desde codigo a ficha_cliente
     private router = inject(Router);
 
+    // utilizamos el evento OnInt del ciclo de vida para cargar los datos de la API 
     ngOnInit(): void {
       this.getListaEmpresas();
     }
+
+    seleccionarEmpresa(empresa: EmpresaAPI) {
+      // ejemplo de console.log / console.table /alert
+      console.log('Empresa seleccionda:',empresa);      // Muestra la informacion de la lista de clientes en la consola
+      console.table(empresa);                           // Muestra la lista clientes en la consola en formato de tabla
+      console.table(empresa, ['codigo','nombre']);      // Filtrar: Muestra solo las columnas 'codigo','nombre' de la tabla      
+      // seleccion de empresa
+      this.empresaSeleccionada = empresa;
+      this.outEmpresaSeleccionada.emit(empresa);        // lanzamos emit para comunicacion con el padre
+    }
   
-    // obtiene la lista empresa y selecciona opcionalmente la que tenga el codigo pasado como parametro
+
+    //#region - metodos que interactuan con el servicio/apis
+
+    // obtiene la lista empresa y selecciona opcionalmente selecciona la que tenfa el codigo pasado como parametro
     getListaEmpresas(codigoSeleccionado?:string): void {
       this.servicioCientes.obtenerListaClientes().subscribe({
         next: (empresas) => {
@@ -69,16 +81,13 @@ export class ListaClienteFinalComponent {
       });    
     }
 
-    seleccionarEmpresa(empresa: EmpresaAPI) {
-      // ejemplo de console.log / console.table /alert
-      console.log('Empresa seleccionda:',empresa);      // Muestra la informacion de la lista de clientes en la consola
-      console.table(empresa);                           // Muestra la lista clientes en la consola en formato de tabla
-      console.table(empresa, ['codigo','nombre']);      // Filtrar: Muestra solo las columnas 'codigo','nombre' de la tabla      
-      // seleccion de empresa
-      this.empresaSeleccionada = empresa;
-      this.outEmpresaSeleccionada.emit(empresa);
-    }
-
+    /*
+      En las funciones que cambian los valores de una empresa cuando se resuelve correctamente 
+      añadimos una llamada o obtener empresas para refrescar cambios en la lista que se hayan
+      producido por la interacción de otros usuarios de la app 
+      (en lugar de modificar el valor retronado localmente)
+    */
+   
     desactivarEmpresa(empresa: EmpresaAPI): void {
       this.servicioCientes.desactivarEmpresa(empresa).subscribe({
         next: (empresaActualizada) => {
@@ -135,6 +144,10 @@ export class ListaClienteFinalComponent {
       }
     }    
 
+    //#endregion - metodos que interactuan con el servicio/apis
+
+
+    // botones y funciones añadidos para ir a la dicha del cliente seleccionado / insertar uno nuevo
     editarEmpresa(empresa:EmpresaAPI){
       this.router.navigate(['/ficha-cliente/editar', empresa.id]);
     }
@@ -142,4 +155,5 @@ export class ListaClienteFinalComponent {
     insertarEmpresa(){
       this.router.navigate(['/ficha-cliente']); 
     }
+    
 }

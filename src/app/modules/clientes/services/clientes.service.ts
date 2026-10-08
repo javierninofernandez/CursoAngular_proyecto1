@@ -142,6 +142,12 @@ export class ClientesService implements OnInit {
 
   //#region -- Gestion del LocalStorage
 
+  /*
+    Codigo adicional para la introduccion del LocalStorage de los Navegadores que 
+    nos permite almacenar el array (usando JSON) de forma que no se pierdan los valores 
+    mientras navegamos en diferentes paginas de nuestra aplicación
+  */
+
   CargarListaClientesLocalStorage(): void {
     // Bloque para obtener datos previamente guardados en Local Storage
     const datosGuardados = localStorage.getItem(this.STORAGE_KEY);
