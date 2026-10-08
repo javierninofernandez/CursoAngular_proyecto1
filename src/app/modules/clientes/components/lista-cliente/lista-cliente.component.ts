@@ -23,6 +23,10 @@ export class ListaClienteComponent {
     
     public readonly estadoCliente = EstadoCliente; // Para poder usar el enumerado en la plantilla HTML
 
+    //TODO
+    //* importante
+    //? Cosas que revisar
+    
     // Gestion de comunicacion con el padre -> 
     // @Output() empresaSeleccionada: Empresa | null = null;  // version tradicional
     outEmpresaSeleccionada = output<Empresa>();
@@ -133,7 +137,8 @@ export class ListaClienteComponent {
     }
 
     eliminarEmpresa(empresa: Empresa): void {      
-      alert('Eliminar Empresa');      
+      alert('Eliminar Empresa'); 
+      confirm('Desea eliminar')     
       // Lógica para eliminar      
       let index:number = this.listaEmpresas.findIndex( (cl) => cl.codigo == empresa.codigo );      
       if (index >=0 ) {

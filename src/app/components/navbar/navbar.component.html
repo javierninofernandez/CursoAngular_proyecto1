@@ -1,67 +1,115 @@
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <!-- Logo o Marca -->
-            <p class="navbar-brand mb-0">
-                <img src="favicon.ico" alt="Logo" width="30" height="24" class="d-inline-block align-text-top me-2">
-                {{ titulo }}
-            </p>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
-            <!-- Botón Hamburguesa para dispositivos móviles -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+    <div class="container-fluid">
 
-            <!-- Elementos del menú colapsable -->
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+        <!-- Logo o Marca -->
+        <p class="navbar-brand mb-0">
+            <img
+                src="favicon.ico"
+                alt="Logo"
+                width="30"
+                height="24"
+                class="d-inline-block align-text-top me-2">
+            {{ titulo }}
+        </p>
 
-                    <!-- Elementos del menú estaticos -->
-                    <!-- <li class="nav-item">
-                        <a [routerLink]="['/home']" class="nav-link" [routerLinkActive]="'active'">Inicio</a>                        
-                    </li>
-                    <li class="nav-item">
-                        <a [routerLink]="['/dashboard']" class="nav-link" [routerLinkActive]="'active'">Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a [routerLink]="['/prueba']" class="nav-link" [routerLinkActive]="'active'">Contador</a>   
-                    </li> -->
 
-                    <!-- Elementos del menú dinamicos -->
-                    @for (menuItem of listaRutas; track menuItem.titulo) {
+        <!-- Botón Hamburguesa para dispositivos móviles -->
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+
+        <!-- Elementos del menú colapsable -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+
+            <ul class="navbar-nav ms-auto pe-4">
+                <!-- Elementos del menú dinámicos con @for -->
+                @for (menuItem of listaRutas; track menuItem.titulo) {
+
+                    <!-- Check itmeMenu con Submenú -->
+                    @if (menuItem.hijos && menuItem.hijos.length > 0) {
+
+                        <li class="nav-item dropdown">
+                            <!-- Botón principal del desplegable -->
+                            <button type="button" 
+                                class="nav-link dropdown-toggle d-flex align-items-center border-0 bg-transparent" data-bs-toggle="dropdown" aria-expanded="false"
+                                [class.active]="isMenuItemActive(menuItem)">
+                                 @if (menuItem.icono) { <i class="{{ menuItem.icono }} me-1"></i> } {{ menuItem.titulo }} 
+                            </button>
+
+                            <!-- Submenú -->
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                @for (subItem of menuItem.hijos; track subItem.titulo) {
+                                    @if(subItem.isDivider) {
+                                    <li>
+                                        <hr class="dropdown-divider" style="border-color: white;">
+                                    </li>
+                                    }
+                                    @else {
+                                    <li>
+                                        <a
+                                            class="dropdown-item d-flex align-items-center"
+                                            [class.disabled]="subItem.isDisabled"
+                                            [attr.aria-disabled]="subItem.isDisabled"
+                                            [routerLink]="subItem.isDisabled ? null : subItem.path"
+                                            [routerLinkActive]="'active'"
+                                            [routerLinkActiveOptions]="{ exact: true }">
+                                            @if (subItem.icono) {<i class="{{ subItem.icono }} me-2"></i>} {{ subItem.titulo }}
+                                        </a>
+                                    </li>
+                                    }
+                                }
+                            </ul>
+
+                        </li>
+
+
+                    } @else {
+                        <!-- ELEMENTO NORMAL -->
                         <li class="nav-item">
-                            <a class="nav-link d-flex align-items-center"
+                            <a
+                                class="nav-link d-flex align-items-center"
                                 [class.disabled]="menuItem.isDisabled"
-                                [attr.aria-disabled]="menuItem.isDisabled" 
-                                [routerLink]="[menuItem.isDisabled ? null : menuItem.path]"  
-                                [routerLinkActive]="'active'" 
-                                [routerLinkActiveOptions]="{exact: true}"
-                            >
-                                <i class="{{menuItem.icono}}"></i>
-                                {{ menuItem.titulo }}
+                                [attr.aria-disabled]="menuItem.isDisabled"
+                                [routerLink]="menuItem.isDisabled ? null : menuItem.path"
+                                [routerLinkActive]="'active'"
+                                [routerLinkActiveOptions]="{ exact: true }">
+                                @if (menuItem.icono) {<i class="{{ menuItem.icono }} me-1"></i> } {{ menuItem.titulo }}
                             </a>
+
                         </li>
                     }
 
-                    <!--Explicación de la directiva @for y los atributos de routerLink-->
-                    <!--
-                        @for: recorre los elementos de listaRutas.
-                        track menuItem.titulo: identifica cada elemento mediante su título.
-                        [routerLink]: navega a la ruta especificada.
-                        routerLinkActive="active": aplica la clase active cuando la ruta está activa.
-                        [routerLinkActiveOptions]="{ exact: true }": exige que la ruta coincida exactamente.                                           
-                    -->
-                   
-                </ul>
+                }
+            </ul>
 
-                <!-- Botón Salir -->
-                <button 
-                    type="button" 
-                    class="btn btn-outline-light ms-4"
-                    (click)="salir()">
-                    <i class="bi bi-box-arrow-right me-1"></i>
-                    Salir
-                </button>
-            </div>
+
+            <!-- ====================================================== -->
+            <!-- BOTÓN SALIR -->
+            <!-- ====================================================== -->
+
+            <button
+                type="button"
+                class="btn btn-outline-light ms-4"
+                (click)="salir()">
+
+                <i class="bi bi-box-arrow-right me-1"></i>
+
+                Salir
+
+            </button>
+
         </div>
-    </nav>
+
+    </div>
+
+</nav>

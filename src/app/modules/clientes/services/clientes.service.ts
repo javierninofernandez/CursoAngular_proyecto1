@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Empresa,EstadoCliente } from '../models/cliente.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ClientesService {
+export class ClientesService implements OnInit {
+
+  private readonly STORAGE_KEY = 'listaClientes';
 
   // declaración de la lista de clientes
   // listaClientes: Empresa[] = []; -> Para inicializarla con la lista vacia
@@ -64,6 +66,11 @@ export class ClientesService {
 
   constructor() { }
 
+  ngOnInit(): void {
+    this.CargarListaClientesLocalStorage();
+  }
+
+
   obtenerListaClientes():Empresa[] {
     // retornamos la lista de clientes
     return this.listaEmpresas
@@ -105,7 +112,10 @@ export class ClientesService {
     let index:number = this.listaEmpresas.findIndex( (cl) => cl.codigo == empresa.codigo );      
     if (index >=0 ) {
       console.log('CAMBIO ESTADO: Estado Anterior:'+this.listaEmpresas[index].estado+' -> Nuevo Estado:'+newEstado);
+      // cambio estado en el array
       this.listaEmpresas[index].estado = newEstado;
+      // Guardamos la lista actualizada en localStorage
+      this.ModificarLocalStorage();
     }
   }
 
@@ -129,5 +139,27 @@ export class ClientesService {
       
   //#endregion
 
+
+  //#region -- Gestion del LocalStorage
+
+  CargarListaClientesLocalStorage(): void {
+    // Bloque para obtener datos previamente guardados en Local Storage
+    const datosGuardados = localStorage.getItem(this.STORAGE_KEY);
+    if (datosGuardados) {
+      this.listaEmpresas = JSON.parse(datosGuardados);
+    } 
+    else {
+      localStorage.setItem(this.STORAGE_KEY,JSON.stringify(this.listaEmpresas) );
+    }  
+  }
+
+  limpiarListaClientesLocalStorage(): void {
+    localStorage.removeItem(this.STORAGE_KEY);
+  }
+
+  ModificarLocalStorage(){
+    localStorage.setItem(this.STORAGE_KEY,JSON.stringify(this.listaEmpresas) ); 
+  }
+
+  //#endregion
 }
-''

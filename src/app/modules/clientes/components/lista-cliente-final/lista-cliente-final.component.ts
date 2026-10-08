@@ -6,10 +6,10 @@ lista-cliente-final.componente : version final con servicio de API
 */
 import { Component, output, input, inject } from '@angular/core';
 import { NgClass, UpperCasePipe } from '@angular/common';
+import { Router } from '@angular/router';
 
-
-import { ClienteAPI,EstadoCliente } from '../../models/cliente.model';
-import { ClientesService } from '../../services/clientes.http.service'
+import { EmpresaAPI,EstadoCliente } from '../../models/cliente.model';
+import { ClientesServiceHttp } from '../../services/clientes.http.service'
 
 
 @Component({
@@ -24,25 +24,26 @@ export class ListaClienteFinalComponent {
    
     // Gestion de comunicacion con el padre -> 
     filtrarBajas = input<boolean>(false);              // verion tradicional @Input() filtrarBajas: boolean = false;
-    outEmpresaSeleccionada = output<ClienteAPI>();  // version tradicional @Output() empresaSeleccionada: Empresa | null = null;  
+    outEmpresaSeleccionada = output<EmpresaAPI>();  // version tradicional @Output() empresaSeleccionada: Empresa | null = null;  
 
 
     //#region - variables internas del componente
     ///filtrarBajas: boolean = false;
     
-    empresaSeleccionada: ClienteAPI | null = null
-    listaEmpresas: ClienteAPI[] = [];    
+    empresaSeleccionada: EmpresaAPI | null = null
+    listaEmpresas: EmpresaAPI[] = [];    
     //#endregion
 
     //#region - inyección del servicio
     // tradicional
     //constructor(public clienteService: ClienteService) {}
-  
     // recomendada en las ultimas versiones
-    private servicioCientes = inject(ClientesService);
+    private servicioCientes = inject(ClientesServiceHttp);
     //#endregion
 
-  
+    //injeccion del router para navegar desde codigo a ficha_cliente
+    private router = inject(Router);
+
     ngOnInit(): void {
       this.getListaEmpresas();
     }
@@ -68,7 +69,7 @@ export class ListaClienteFinalComponent {
       });    
     }
 
-    seleccionarEmpresa(empresa: ClienteAPI) {
+    seleccionarEmpresa(empresa: EmpresaAPI) {
       // ejemplo de console.log / console.table /alert
       console.log('Empresa seleccionda:',empresa);      // Muestra la informacion de la lista de clientes en la consola
       console.table(empresa);                           // Muestra la lista clientes en la consola en formato de tabla
@@ -78,7 +79,7 @@ export class ListaClienteFinalComponent {
       this.outEmpresaSeleccionada.emit(empresa);
     }
 
-    desactivarEmpresa(empresa: ClienteAPI): void {
+    desactivarEmpresa(empresa: EmpresaAPI): void {
       this.servicioCientes.desactivarEmpresa(empresa).subscribe({
         next: (empresaActualizada) => {
           console.log('Empresa desactivada:', empresaActualizada );
@@ -89,7 +90,7 @@ export class ListaClienteFinalComponent {
       });
     }    
 
-    activarEmpresa(empresa: ClienteAPI): void {      
+    activarEmpresa(empresa: EmpresaAPI): void {      
       this.servicioCientes.activarEmpresa(empresa).subscribe({
         next: (empresaActualizada) => {
           console.log('Empresa activada:', empresaActualizada );
@@ -100,7 +101,7 @@ export class ListaClienteFinalComponent {
       });      
     }    
 
-    bajaEmpresa(empresa: ClienteAPI): void {      
+    bajaEmpresa(empresa: EmpresaAPI): void {      
       this.servicioCientes.bajaEmpresa(empresa).subscribe({
         next: (empresaActualizada) => {
           console.log('Empresa dada de baja:', empresaActualizada );
@@ -111,11 +112,17 @@ export class ListaClienteFinalComponent {
       }); 
     }
 
-    cambiarEstado(empresa:ClienteAPI, newEstado:EstadoCliente): void {
-      this.servicioCientes.cambiarEstado(empresa,newEstado);
+    cambiarEstado(empresa:EmpresaAPI, newEstado:EstadoCliente): void {
+      this.servicioCientes.cambiarEstado(empresa,newEstado).subscribe({
+        next: (empresaActualizada) => {
+          this.getListaEmpresas();
+        },
+        error: (error) => {console.error('Error cambiando estado:',error);
+        }
+      }); 
     }
 
-    eliminarEmpresa(empresa: ClienteAPI): void { 
+    eliminarEmpresa(empresa: EmpresaAPI): void { 
       if (confirm(`¿Eliminar la empresa ${empresa.nombre}?`)) {       
         this.servicioCientes.eliminarEmpresa(empresa).subscribe({
           next: () => {
@@ -126,7 +133,13 @@ export class ListaClienteFinalComponent {
           }
         });     
       }
-  }    
+    }    
 
+    editarEmpresa(empresa:EmpresaAPI){
+      this.router.navigate(['/ficha-cliente/editar', empresa.id]);
+    }
 
+    insertarEmpresa(){
+      this.router.navigate(['/ficha-cliente']); 
+    }
 }

@@ -7,6 +7,11 @@ export enum EstadoCliente {
   Baja = 'Baja'
 }
 
+export enum EstadoFormulario {
+  Consulta = 0,
+  Edicion = 1,
+  Insercion = 2
+}
 
 // definicion de interfaces para la estructura de datos de un cliente y su direccion
 
@@ -21,7 +26,7 @@ export interface Empresa {
 
 export interface Direccion {
   calle:string;
-  numero: number;
+  numero?: number;
   copigoPostal?: string; 
   poblacion?: string;
   provincia:  string;
@@ -31,8 +36,8 @@ export interface Direccion {
 
 // definicion alternativa de clientes para el uso de la API -> Añadimos un id
 
-export interface ClienteAPI {
-  id: number;
+export interface EmpresaAPI {
+  id: number | undefined;
   codigo: string;
   nombre: string;
   nif: string;

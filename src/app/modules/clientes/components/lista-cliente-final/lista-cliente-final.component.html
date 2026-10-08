@@ -48,6 +48,14 @@
 
                 <!-- botones de acciones : Uso de [disabled] para activar/desactivar el boton -->
                 <td class="acciones">
+                    <!-- Editar (new) -->
+                    <button
+                        type="button"
+                        class="btn btn-success btn-sm mx-1"
+                        title="Editar Empresa"
+                        (click)="editarEmpresa(empresa);">
+                        <i class="bi bi-pencil"></i>
+                    </button>                    
                     <!-- Marcar como Activa -->
                     <button
                         type="button"
@@ -63,7 +71,7 @@
                         class="btn btn-outline-warning btn-sm mx-1"
                         title="Marcar como inactiva"
                         [disabled]="empresa.estado==estadoCliente.Inactivo"
-                        (click)="desactivarEmpresa(empresa); $event.stopPropagation()">
+                        (click)="desactivarEmpresa(empresa);">
                         <i class="bi bi-person-up"></i>
                     </button>
                     <!-- Dar de baja -->
@@ -81,7 +89,7 @@
                         class="btn btn-danger btn-sm mx-1"
                         title="Eliminar registro"
                         [disabled]="empresa.estado!=estadoCliente.Baja"
-                        (click)="eliminarEmpresa(empresa); $event.stopPropagation()">
+                        (click)="eliminarEmpresa(empresa);">
                         <i class="bi bi-trash"></i>
                     </button>
                 </td>  
@@ -93,4 +101,11 @@
     </tbody>
 
     </table>   
+</section>
+
+<section class="mt-2">
+    <div class="card-footer">
+        <!-- <button type="button" class="btn btn-primary ms-4 m" >Editar</button> -->
+        <button type="button" class="btn btn-primary ms-4" (click)="insertarEmpresa()"><i class="bi bi-plus-square mx-1"></i>Insertar Nuevo Cliente</button>
+    </div>    
 </section>

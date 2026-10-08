@@ -6,7 +6,9 @@ import { EjemploComponent } from './pages/ejemplo/ejemplo.component';
 import { PageListaClientesComponent } from './modules/clientes/pages/page-lista-clientes/page-lista-clientes.component';
 //import { ListaClienteFinalComponent } from './modules/clientes/components/lista-cliente-final/lista-cliente-final.component';
 import { PageListaClienteFinalComponent } from './modules/clientes/pages/page-lista-cliente-final/page-lista-cliente-final.component';
-import { PageClientesComponent } from './modules/clientes/pages/page-clientes/page-clientes.component';
+//import { PageClientesComponent } from './modules/clientes/pages/page-clientes/page-clientes.component';
+//import { FichaClienteComponent } from './modules/clientes/components/ficha-cliente/ficha-cliente.component';
+import { PageFichaClienteComponent } from './modules/clientes/pages/page-ficha-cliente/page-ficha-cliente.component';
 
 
 
@@ -19,7 +21,9 @@ export const routes: Routes = [
     { path: 'lista-clientes', component: PageListaClientesComponent },
     //{ path: 'lista-clientes-final', component: ListaClienteFinalComponent },
     { path: 'lista-clientes-final', component: PageListaClienteFinalComponent },
-    { path: 'clientes', component: PageClientesComponent },
+    //{ path: 'clientes', component: PageClientesComponent },
+    { path: 'ficha-cliente', component: PageFichaClienteComponent },
+    { path: 'ficha-cliente/editar/:id', component: PageFichaClienteComponent },
 
     //{ path:'**', component:NotFoundComponent},
     { path:'**', redirectTo:'home'}

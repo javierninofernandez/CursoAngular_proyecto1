@@ -1,99 +1,244 @@
+<section class="mx-5 my-5">
 
 <div class="mt-4">
+  <div class="card shadow-sm">    
 
-    <div class="card shadow-sm">
+    <!-- Cabecera -->
+    <div class="card-header bg-primary text-white">
+      <h4 class="mb-0">Datos de la empresa</h4>
+    </div>
+       
+    <!-- Contenido -->
+    <div class="card-body">    
 
-        <div class="card-header bg-primary text-white">
-        <h4 class="mb-0">
-            Datos de la empresa
-        </h4>
-        </div>
-
-        <div class="card-body">
+        <form #empresaForm="ngForm" (ngSubmit)="btnConfirmar(empresaForm)">
 
         <div class="row">
-            @if (empresaSeleccionada(); as empresa) {
-            <!-- Código -->
-            <div class="col-md-12 mb-3">
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label fw-bold">Código</label>
-                        <div class="form-control bg-light">
-                            {{ empresa.codigo }}
-                        </div>
-                    </div>
 
-                    <!-- Nombre -->
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label fw-bold">Nombre</label>
-                        <div class="form-control bg-light">
-                            {{ empresa.nif }}
-                        </div>
-                    </div>
+            <!-- Datos generales Empresa-->
+
+            <!-- Id / solo lectura -->
+            <div class="col-md-1 mb-1">
+            <label class="form-label fw-bold">ID</label>
+
+            <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="empresa.id"
+                name="id"
+                #id="ngModel"
+                [disabled]="true"
+                [readOnly]="true"
+            >            
+            </div>
+
+            <!-- Código -->
+            <div class="col-md-3 mb-3">
+            <label class="form-label fw-bold">Código</label>
+
+            <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="empresa.codigo"
+                name="codigo"
+                required                
+                #codigo="ngModel"
+                [disabled]="!modoEdicion"
+                [class.is-invalid]="codigo.invalid && (codigo.touched || codigo.dirty)"
+            >
+
+            <div class="invalid-feedback">
+                @if (codigo.invalid && (codigo.touched || codigo.dirty)){
+                    El código es obligatorio.
+                }
+            </div>
+            </div>
+
+            <!-- NIF -->
+            <div class="col-md-3 mb-3">
+            <label class="form-label fw-bold">NIF</label>
+
+            <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="empresa.nif"
+                name="nif"
+                required
+                [disabled]="!modoEdicion"
+                #nif="ngModel"
+                [class.is-invalid]="nif.invalid && (nif.touched || nif.dirty)"
+            >
+
+            <div class="invalid-feedback">
+                @if (nif.invalid && (nif.touched || nif.dirty)) {
+                El NIF es obligatorio.
+                }
+            </div>
+            </div>
+
+            <!-- Estado -->
+            <div class="col-md-3 mb-3">
+            <label class="form-label fw-bold">Estado</label>
+
+            <select
+                class="form-select"
+                [(ngModel)]="empresa.estado"
+                name="estado"
+                required
+                [disabled]="!modoEdicion"
+                #estado="ngModel"
+                [class.is-invalid]="estado.invalid && (estado.touched || estado.dirty)"
+            >
+                <option value="">Seleccione un estado</option>
+                <option value="Activo">Activo</option>
+                <option value="Inactivo">Inactivo</option>
+            </select>
+
+            @if (estado.invalid && (estado.touched || estado.dirty)) {
+                <div class="invalid-feedback">
+                Debe seleccionar un estado.
                 </div>
-                <div class="col-md-12 mb-3">
-                    <!-- NIF -->
-                    <div class="col-md-12">
-                        <label class="form-label fw-bold">NIF</label>
-                        <div class="form-control bg-light">                            
-                            {{ empresa.nombre }}
-                        </div>
-                    </div>
+            }
+            </div>
+
+            <!-- Nombre -->
+            <div class="col-md-12 mb-3">
+            <label class="form-label fw-bold">Nombre</label>
+
+            <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="empresa.nombre"
+                name="nombre"
+                required
+                [disabled]="!modoEdicion"
+                #nombre="ngModel"
+                [class.is-invalid]="nombre.invalid && (nombre.touched || nombre.dirty)"
+            >
+
+            @if (nombre.invalid && (nombre.touched || nombre.dirty)) {
+                <div class="invalid-feedback">
+                El nombre es obligatorio.
                 </div>
+            }
             </div>
 
             <hr>
 
+            <!-- Datos de la dirección -->
             <h5 class="mb-3">Dirección</h5>
 
             <div class="row">
 
-                    <!-- Calle -->
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label fw-bold">Calle</label>
-                        <div class="form-control bg-light">
-                            {{ empresa.direccion.calle }}
-                        </div>
-                    </div>
+            <!-- Calle -->
+            <div class="col-md-5 mb-3">
+                <label class="form-label fw-bold">Calle</label>
 
-                    <!-- Número -->
-                    <div class="col-md-2 mb-3">
-                    <label class="form-label fw-bold">Número</label>
-                    <div class="form-control bg-light">
-                        {{ empresa.direccion.numero }}
-                    </div>
-                    </div>
+                <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="empresa.direccion.calle"
+                name="calle"
+                required
+                [disabled]="!modoEdicion"
+                #calle="ngModel"
+                [class.is-invalid]="calle.invalid && (calle.touched || calle.dirty)"
+                >
 
-                    <!-- Provincia -->
-                    <div class="col-md-4 mb-3">
-                    <label class="form-label fw-bold">Provincia</label>
-                    <div class="form-control bg-light">
-                        {{ empresa.direccion.provincia }}
-                    </div>
-                    </div>
+                @if (calle.invalid && (calle.touched || calle.dirty)) {
+                <div class="invalid-feedback">
+                    La calle es obligatoria.
+                </div>
+                }
+            </div>
+
+            <!-- Número -->
+            <div class="col-md-1 mb-3">
+                <label class="form-label fw-bold">Número</label>
+
+                <input
+                type="number"
+                class="form-control"
+                [(ngModel)]="empresa.direccion.numero "
+                name="numero"
+                [disabled]="!modoEdicion"
+                #numero="ngModel"
+                [class.is-invalid]="numero.invalid && (numero.touched || numero.dirty)"
+                >
+            </div>
+
+            <!-- Número -->
+            <div class="col-md-1 mb-3">
+                <label class="form-label fw-bold">C.Postal</label>
+
+                <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="empresa.direccion.copigoPostal"
+                name="codigopostal"
+                [disabled]="!modoEdicion"
+                #codigopostal="ngModel"
+                [class.is-invalid]="codigopostal.invalid && (codigopostal.touched || codigopostal.dirty)"
+                >
+            </div>            
+
+            <!-- Población -->
+            <div class="col-md-3 mb-3">
+                <label class="form-label fw-bold">Población</label>
+
+                <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="empresa.direccion.poblacion"
+                [disabled]="!modoEdicion"
+                name="poblacion"
+                #poblacion="ngModel"
+                [class.is-invalid]="poblacion.invalid && (poblacion.touched || poblacion.dirty)"
+                >
+            </div>
+
+
+            <!-- Provincia -->
+            <div class="col-md-2 mb-3">
+                <label class="form-label fw-bold">Provincia</label>
+
+                <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="empresa.direccion.provincia"
+                [disabled]="!modoEdicion"
+                name="provincia"
+                #provincia="ngModel"
+                [class.is-invalid]="provincia.invalid && (provincia.touched || provincia.dirty)"
+                >
+            </div>
 
             </div>
 
-            } @else {
-                <p>Selecciona una empresa para ver sus datos.</p>
-            }
+            <!-- Botones -->
+            <!-- <div class="text-end"> -->
 
+                <!-- Botones -->
+                <div class="card-footer text-end">
+
+                @if (operacion == estadoFormulario.Consulta) {
+                    <button type="button" class="btn btn-secondary" (click)="btnVolver()">Volver</button>
+                    <button type="button" class="btn btn-primary ms-2" (click)="btnEditar()">Editar</button>
+                    <button type="button" class="btn btn-primary ms-2" (click)="btnInsertar()">Insertar</button>
+                }
+                @else {
+                    <!-- <button type="button" class="btn btn-success ms-2" (click)="btnConfirmar(empresaForm)">Confirmar</button> -->
+                    <button type="submit" class="btn btn-success ms-2">Confirmar</button>
+                    <button type="button" class="btn btn-danger ms-2" (click)="btnCancelar(empresaForm)">Cancelar</button>
+                }
+                </div>
+
+            <!-- </div> -->
         </div>
 
-        </div>
-
-        <!-- <div class="card-footer text-end">
-        <button class="btn btn-secondary">
-            Volver
-        </button>
-
-        <button class="btn btn-primary ms-2">
-            Editar
-        </button>
-        </div> -->
+        </form>
 
     </div>
-
+  </div>
 </div>
-
-
+</section>
