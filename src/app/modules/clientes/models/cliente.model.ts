@@ -41,6 +41,6 @@ export interface EmpresaAPI {
   codigo: string;
   nombre: string;
   nif: string;
-  estado: EstadoCliente;
+  estado: EstadoCliente | undefined;
   direccion: Direccion
 }

@@ -90,8 +90,11 @@
                 [class.is-invalid]="estado.invalid && (estado.touched || estado.dirty)"
             >
                 <option value="">Seleccione un estado</option>
-                <option value="Activo">Activo</option>
-                <option value="Inactivo">Inactivo</option>
+                @for (opcion of estadosCliente; track opcion.valor) {
+                    <option [value]="opcion.valor">
+                    {{ opcion.texto }}
+                    </option>
+                }                
             </select>
 
             @if (estado.invalid && (estado.touched || estado.dirty)) {
@@ -222,8 +225,12 @@
                 <div class="card-footer text-end">
 
                 @if (operacion == estadoFormulario.Consulta) {
+                    @if(volverVisible) {
                     <button type="button" class="btn btn-secondary" (click)="btnVolver()">Volver</button>
+                    }  
+                    @if (empresa.id!=undefined) {
                     <button type="button" class="btn btn-primary ms-2" (click)="btnEditar()">Editar</button>
+                    }                      
                     <button type="button" class="btn btn-primary ms-2" (click)="btnInsertar()">Insertar</button>
                 }
                 @else {

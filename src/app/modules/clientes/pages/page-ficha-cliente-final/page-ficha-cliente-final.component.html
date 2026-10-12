@@ -1,0 +1,21 @@
+<!-- Incluimos el componente Navbar -->
+<app-navbar></app-navbar>
+
+<!-- Incluimos el componente Header -->
+<app-header [titulo]="titulo"></app-header>
+
+<!-- Contenido Principal de la Página -->
+<main class="flex-grow-1">
+    <div class="mt-1 px-2">
+        @switch (tipoFormulario) {
+            @case ('ngform') { <app-ficha-cliente-ngform></app-ficha-cliente-ngform> }
+            @case ('reactform') { <app-ficha-cliente-reactform></app-ficha-cliente-reactform> }
+            @case ('primeng') { <app-ficha-cliente-primeng></app-ficha-cliente-primeng> }
+            @default { <app-ficha-cliente-ngform></app-ficha-cliente-ngform>}
+        }
+    </div>
+</main>
+
+<!-- Incluimos el componente Footer -->
+<app-footer></app-footer>
+

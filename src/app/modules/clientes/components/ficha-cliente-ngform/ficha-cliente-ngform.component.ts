@@ -1,3 +1,16 @@
+/* 
+  Formulario Basado en plantillas usando FormsModule/ngForm 
+  - [(ngModel)]="empresa.direccion.calle"
+  - name="calle"
+  - #calle="ngModel"
+  - required
+  - [disabled]="!modoEdicion"
+
+  Utilización del servicio con API's 
+  Uso extendido del Router
+    - Llamadas con parametros (ActivatedRoute)
+    - Volver (location.back)
+*/
 import { Component, input, OnInit, inject } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -5,44 +18,57 @@ import { Location } from '@angular/common';
 import { ClientesServiceHttp } from '../../services/clientes.http.service';
 import { EmpresaAPI, EstadoCliente, EstadoFormulario } from '../../models/cliente.model';
 @Component({
-  selector: 'app-ficha-cliente',
+  selector: 'app-ficha-cliente-ngform',
   imports: [FormsModule],
-  templateUrl: './ficha-cliente.component.html',
-  styleUrl: './ficha-cliente.component.css'
+  templateUrl: './ficha-cliente-ngform.component.html',
+  styleUrl: './ficha-cliente-ngform.component.css'
 })
 
-export class FichaClienteComponent implements OnInit {
+export class FichaClienteNgformComponent implements OnInit {
   
-  // gestion del router para obtener el paso de parametros
+  // gestion del router para obtener el paso de parametros (injeccion para su uso de ActivateRoute y Location)
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private location = inject(Location);
-  clienteId = this.route.snapshot.paramMap.get('id');  //el valor es siempre un string
+  clienteId = this.route.snapshot.paramMap.get('id');  // obtencion del parametro -> el valor es siempre un string
 
+  // injeccion para uso del servicio
+  servicioCliente = inject(ClientesServiceHttp);
+  
+  
+  //#region - declaracion de variables internas del componente
   public readonly estadoFormulario = EstadoFormulario;
 
-  // parametro de entrada para recibir la empresa seleccionada desde el componente padre
-  //@input() empresa: Empresa | null = null;
-  // @Input() empresa: Empresa = { codigo: '', nombre: '', nif: '', direccion: { calle: '', numero: 0, provincia: '' } }; 
-  inEmpresaSeleccionada = input<EmpresaAPI | null>();
-  inOperacion = input<EstadoFormulario>();
+  readonly estadosCliente = Object.keys(EstadoCliente).map(key => ({
+    texto: key,                                         
+    valor: EstadoCliente[key as keyof typeof EstadoCliente] 
+  }));  
+  estado:string = '';
+  
+  componenteOrigen: string = '';
+  volverVisible: boolean = false;
 
-  servicioCliente = inject(ClientesServiceHttp);
-
-  //#region - declaracion de variables internas del componente
   operacion: EstadoFormulario = EstadoFormulario.Consulta;
   modoEdicion: boolean = false;
+
   empresa: EmpresaAPI = this.inicializarEmpresa();
   empresaCopia: EmpresaAPI = this.inicializarEmpresa(); 
   //endregion 
 
-  // constructor() {
-  //   this.empresa = this.empresaSeleccionada();
-  // }
+
 
   ngOnInit(): void {
-    //this.empresa= this.inEmpresaSeleccionada();
-    //this.inicializarEmpresa();
+    // obtener el componente desde el que se le llama
+    const origen = history.state.origen;
+    console.log('Navegación iniciada desde:', (origen) ? origen : 'sin definir');
+    if (origen == undefined || origen=='NavBar') {
+      this.volverVisible = false;
+    }
+    else {
+      this.volverVisible = true;
+    }
+    
+    // comprobar si se le ha pasado parametro ID en la ruta
     if (this.clienteId) {
       this.obtenerEmpresaAPI(this.clienteId);
     }
@@ -54,7 +80,7 @@ export class FichaClienteComponent implements OnInit {
       id: undefined,
       codigo: '',
       nif: '',
-      estado: EstadoCliente.Activo ,
+      estado: undefined ,
       nombre: '',
       direccion: {
         calle: '',
@@ -123,30 +149,35 @@ export class FichaClienteComponent implements OnInit {
     this.location.back();  // volver a la anterior
   }
 
-
   btnInsertar(){
     // guardo copia de empresa actual por si cancelo
     this.empresaCopia = structuredClone(this.empresa);
-    this.inicializarEmpresa();
+    // variables control estado formulario
     this.modoEdicion = true;
     this.operacion = this.estadoFormulario.Insercion;
+    // inicializar empresa
+    this.inicializarEmpresa();
   }
 
   btnEditar(){
     // guardo copia de empresa actual por si cancelo
     this.empresaCopia = structuredClone(this.empresa);
-    this.inicializarEmpresa();
+    // variables control estado formulario
     this.modoEdicion = true;
     this.operacion = this.estadoFormulario.Edicion;
+    //this.inicializarEmpresa();
   }
 
   // boton Cancelar
   btnCancelar(form: NgForm){
     console.log('cancelar operacion');
+    // reestablecemos copia del valor empresa antes editar/insertar
     this.empresa = structuredClone(this.empresaCopia);
-    form.resetForm();
+    // actualizoi variables control estado formulario
     this.operacion = this.estadoFormulario.Consulta;
     this.modoEdicion = false;
+    // reset posibles aviso de campos invalidos en el formulario
+    form.resetForm();
   }
 
   // boton confirmar actualizacion/insercion
@@ -167,8 +198,6 @@ export class FichaClienteComponent implements OnInit {
       }
       else return
     }
-    
-    // Aquí llamarías al servicio para guardar
   }  
 
   //#endregion - gestion de botones del formulario

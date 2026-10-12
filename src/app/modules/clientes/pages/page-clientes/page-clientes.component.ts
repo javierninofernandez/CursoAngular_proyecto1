@@ -1,6 +1,6 @@
 import { Component,input,signal } from '@angular/core';
 import { ListaClienteComponent } from '../../components/lista-cliente/lista-cliente.component';
-import { FichaClienteComponent } from '../../components/ficha-cliente/ficha-cliente.component';
+import { FichaClienteComponent } from '../../components/ficha-cliente-ngform/ficha-cliente-ngform.component';
 import { NavbarComponent } from '../../../../shared/components/navbar/navbar.component';
 import { FooterComponent } from '../../../../shared/components/footer/footer.component';
 import { HeaderComponent } from "../../../../shared/components/header/header.component";

@@ -3,7 +3,10 @@ lista-cliente-final.componente : version final con servicio de API
 - Uso de servicios con API (observables)
 - Gestion de parametros de entrada y salida (Empresa Seleccionada y Filtrar ahora estan en el padre page-lista-clientes-final)
 - Se añaden opciones de editar/insertar
-- Comunicación con componente de la ficha del cliente --> Llamada a una ruta desde typeScript con parametro opcional
+- Comunicación con componente de la ficha del cliente 
+  -  Apliacion del uso del Router
+  -  Llamada a una ruta desde typeScript con un parametr opcional en url -->  (this.router.navigate(['/ficha-cliente/editar', empresa.id]);)
+    + otros parametros opcioneales (ej. desde donde se la llama) --> this.router.navigate(['/ficha-cliente/editar', empresa.id], { state: { origen: 'lista-clientes-final'} });
 */
 
 import { Component, output, input, inject } from '@angular/core';
@@ -149,11 +152,15 @@ export class ListaClienteFinalComponent {
 
     // botones y funciones añadidos para ir a la dicha del cliente seleccionado / insertar uno nuevo
     editarEmpresa(empresa:EmpresaAPI){
-      this.router.navigate(['/ficha-cliente/editar', empresa.id]);
+      this.router.navigate(['/ficha-cliente/editar', empresa.id], {
+        state: { origen: 'lista-clientes-final'} 
+      });
     }
 
     insertarEmpresa(){
-      this.router.navigate(['/ficha-cliente']); 
+      this.router.navigate(['/ficha-cliente'], {
+        state: { origen: 'lista-clientes-final'} 
+      });
     }
     
 }

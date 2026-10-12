@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ClientesRoutingModule } from './clientes-routing.module';
 
-import { FichaClienteComponent } from './components/ficha-cliente/ficha-cliente.component';
+import { FichaClienteNgformComponent } from './components/ficha-cliente-ngform/ficha-cliente-ngform.component';
 import { ListaClienteComponent } from './components/lista-cliente/lista-cliente.component';
 
 
@@ -16,13 +16,13 @@ import { ListaClienteComponent } from './components/lista-cliente/lista-cliente.
     CommonModule,
     ClientesRoutingModule,
     // van aqui porque estamos trabajando con componentes standalone
-    FichaClienteComponent,
+    FichaClienteNgformComponent,
     ListaClienteComponent
   ],
   exports: [
     CommonModule,
     ClientesRoutingModule,
-    FichaClienteComponent,
+    FichaClienteNgformComponent,
     ListaClienteComponent
   ]
 })

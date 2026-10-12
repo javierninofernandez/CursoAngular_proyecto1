@@ -1,0 +1,168 @@
+<section class="mx-5 my-5">
+
+  <div class="mt-4">
+    <div class="card shadow-sm">
+
+      <!-- Cabecera -->
+      <div class="card-header bg-primary text-white">
+        <h4 class="mb-0">Datos de la empresa</h4>
+      </div>
+
+      <!-- Contenido -->
+      <div class="card-body">
+
+        <form [formGroup]="empresaForm" (ngSubmit)="btnConfirmar()">
+
+           <div class="row">
+
+            <!-- ID -->
+            <div class="col-md-1 mb-1">
+              <label class="form-label fw-bold">ID</label>
+              <input type="text" class="form-control" 
+                formControlName="id"
+                readonly
+              >
+            </div>
+
+            <!-- Código -->
+            <div class="col-md-3 mb-3">
+              <label class="form-label fw-bold">Código</label>
+              <input type="text" class="form-control"
+                formControlName="codigo"
+                [class.is-invalid]=" f['codigo'].invalid && (f['codigo'].touched || f['codigo'].dirty)"
+              >
+              @if (f['codigo'].invalid &&(f['codigo'].touched || f['codigo'].dirty)) {
+                <div class="invalid-feedback">El código es obligatorio.</div>
+              }
+            </div>
+
+            <!-- NIF -->
+            <div class="col-md-3 mb-3">
+              <label class="form-label fw-bold">NIF</label>
+              <input
+                type="text" 
+                class="form-control"
+                formControlName="nif"
+                [class.is-invalid]="f['nif'].invalid && (f['nif'].touched || f['nif'].dirty)"
+              >
+              @if (f['nif'].invalid && (f['nif'].touched || f['nif'].dirty)) {
+                <div class="invalid-feedback">El NIF es obligatorio.</div>
+              }
+            </div>
+
+            <!-- Estado -->
+            <div class="col-md-3 mb-3">
+              <label class="form-label fw-bold">Estado</label>
+              <select class="form-select" 
+                formControlName="estado"
+                [class.is-invalid]="f['estado'].invalid && (f['estado'].touched || f['estado'].dirty)"
+              >
+                <option value="">Seleccione un estado</option>
+                @for (opcion of estadosCliente; track opcion.valor) {
+                    <option [value]="opcion.valor">
+                    {{ opcion.texto }}
+                    </option>
+                }
+              </select>
+              @if (f['estado'].invalid && (f['estado'].touched || f['estado'].dirty)) {
+                <div class="invalid-feedback">Debe seleccionar un estado.</div>
+              }
+            </div>
+
+            <!-- Nombre -->
+            <div class="col-md-12 mb-3">
+              <label class="form-label fw-bold">Nombre</label>
+              <input type="text" 
+                class="form-control"
+                formControlName="nombre"
+                [class.is-invalid]="f['nombre'].invalid && (f['nombre'].touched || f['nombre'].dirty)"
+              >
+              @if (f['nombre'].invalid && (f['nombre'].touched || f['nombre'].dirty)) {
+                <div class="invalid-feedback">El nombre es obligatorio.</div>
+              }
+            </div>
+
+            <hr>
+
+            <!-- Dirección -->
+            <h5 class="mb-3">Dirección</h5>
+
+            <div class="row" formGroupName="direccion">
+
+              <!-- Calle -->
+              <div class="col-md-5 mb-3">
+                <label class="form-label fw-bold">Calle</label>
+                <input type="text"
+                  class="form-control"
+                  formControlName="calle"
+                  [class.is-invalid]="direccion.get('calle')?.invalid && (direccion.get('calle')?.touched || direccion.get('calle')?.dirty)"
+                >
+                @if (direccion.get('calle')?.invalid && (direccion.get('calle')?.touched || direccion.get('calle')?.dirty)) {
+                  <div class="invalid-feedback">La calle es obligatoria.</div>
+                }
+              </div>
+
+              <!-- Número -->
+              <div class="col-md-1 mb-3">
+                <label class="form-label fw-bold">Número</label>
+                <input type="number"
+                  class="form-control"
+                  formControlName="numero"
+                >
+              </div>
+
+              <!-- Código Postal -->
+              <div class="col-md-1 mb-3">
+                <label class="form-label fw-bold">C.Postal</label>
+                <input type="text"
+                  class="form-control"
+                  formControlName="codigopostal"
+                >
+              </div>
+
+              <!-- Población -->
+              <div class="col-md-3 mb-3">
+                <label class="form-label fw-bold">Población</label>
+                <input type="text"
+                  class="form-control"
+                  formControlName="poblacion"
+                >
+              </div>
+
+              <!-- Provincia -->
+              <div class="col-md-2 mb-3">
+                <label class="form-label fw-bold">Provincia</label>
+                <input type="text"
+                  class="form-control"
+                  formControlName="provincia"
+                >
+              </div>
+
+            </div> <!-- direccion -->
+
+            <!-- Botones -->
+            <div class="card-footer text-end">
+              @if (empresaForm.disabled) {
+                @if(volverVisible) {
+                  <button type="button" class="btn btn-secondary" (click)="btnVolver()">Volver</button>
+                }                
+                @if (empresa.id!=undefined) {
+                  <button type="button" class="btn btn-primary ms-2" (click)="btnEditar()">Editar</button>
+                }  
+                <button type="button" class="btn btn-primary ms-2" (click)="btnInsertar()">Insertar</button>
+              }
+              @else {
+                <button type="submit" class="btn btn-success ms-2" [disabled]="empresaForm.invalid">Confirmar</button>
+                <button type="button" class="btn btn-danger ms-2" (click)="btnCancelar()">Cancelar</button>
+              }
+            </div>
+
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+</section>

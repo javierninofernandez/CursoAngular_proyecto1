@@ -5,6 +5,7 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 interface MenuItem {
   titulo: string;
   path?: string;
+  parametro?: string;    //se añade para poder usar parametros adicionales en el router (ej. tipo formulario)
   icono?: string;
   hint?: string;
   isDisabled?: boolean ;
@@ -40,9 +41,13 @@ export class NavbarComponent {
         hijos : [
           { titulo: 'Lista Clientes Basic', path: '/lista-clientes', icono: 'bi bi-people-fill mx-1', hint: 'Ver la lista de clientes', isDisabled: false },
           { titulo: 'Lista Clientes Final', path: '/lista-clientes-final', icono: 'bi bi-people-fill mx-1', hint: 'Ver la lista de clientes', isDisabled: false},
-          //{ titulo: 'Ficha Cliente', path: '/clientes', icono: 'bi bi-people-fill mx-1', hint: 'Gestión de clientes', isDisabled: false },
           { titulo: 'div1', isDivider:true },
           { titulo: 'Nuevo Cliente (ngForm)', path: '/ficha-cliente', icono: 'bi bi-people-fill mx-1', hint: 'Ficha cliente', isDisabled: false },
+          { titulo: 'div2', isDivider:true },
+          // items de menu con los diferentes formatos de formulario pasados como parametro
+          { titulo: 'Nuevo Cliente (ngForm)', path: '/ficha-cliente-final', parametro: 'ngform', icono: 'bi bi-people-fill mx-1', hint: 'Ficha cliente', isDisabled: false },
+          { titulo: 'Nuevo Cliente (ReactForm)', path: '/ficha-cliente-final', parametro: 'reactform', icono: 'bi bi-people-fill mx-1', hint: 'Ficha cliente', isDisabled: false },
+          { titulo: 'Nuevo Cliente (primeNG)', path: '/ficha-cliente-final', parametro: 'primeng', icono: 'bi bi-people-fill mx-1', hint: 'Ficha cliente', isDisabled: true },
         ]
     },
   ];
