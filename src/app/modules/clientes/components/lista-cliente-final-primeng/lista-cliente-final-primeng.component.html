@@ -1,0 +1,146 @@
+<section class="px-3 mx-2 mt-2">
+
+    <p-table
+        [value]="listaEmpresas"
+        styleClass="tabla-empresas"
+        [tableStyle]="{ 'min-width': '70rem' }"
+        showGridlines
+        [(selection)]="empresaSeleccionada"
+        selectionMode="single"        
+        dataKey="id"
+        [metaKeySelection]="false"
+        [paginator]="true"
+        [rows]="10"
+        [rowsPerPageOptions]="[5, 10, 20]"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} empresas"
+        [rowHover]="true"    
+        responsiveLayout="scroll"
+        size="small"
+        (onRowSelect)="alSeleccionarFila($event.data)">
+
+        <!-- Cabecera -->
+        <ng-template #header>
+            <tr>
+                <th>ID</th>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>NIF</th>
+                <th>Estado</th>
+                <th>Calle</th>
+                <!-- <th>Número</th> -->
+                <th>Provincia</th>
+                <th>Acciones</th>
+            </tr>
+        </ng-template>
+
+        <!-- Filas -->
+        <ng-template #body let-empresa>
+            @if (!filtrarBajas() ||
+                 (filtrarBajas() && empresa.estado !== estadoCliente.Baja)) {
+
+                <!-- <tr (click)="seleccionarEmpresa(empresa)">  // ahora lo gestiona onRowSelected del componente -->
+                <tr [pSelectableRow]="empresa">
+                    <td>{{ empresa.id }}</td>
+                    <td>{{ empresa.codigo }}</td>
+                    <td>{{ empresa.nombre }}</td>
+                    <td>{{ empresa.nif }}</td>
+
+                    <!-- Estado del cliente -->
+                    <!-- <td [ngClass]="{
+                        'cliente-activo': empresa.estado === estadoCliente.Activo,
+                        'cliente-inactivo': empresa.estado === estadoCliente.Inactivo,
+                        'cliente-baja': empresa.estado === estadoCliente.Baja                        
+                    }">
+                        {{ empresa.estado }}
+                    </td> -->
+                    <td>
+                        <p-tag [value]="empresa.estado" [severity]="getSeverity( empresa.estado)" />
+                    </td>
+
+                    <td>{{ empresa.direccion.calle }} {{ empresa.direccion.numero }}</td>
+                    <!-- <td>{{ empresa.direccion.numero }}</td> -->
+                    <td>{{ empresa.direccion.provincia }}</td>
+
+                    <!-- Acciones -->
+                    <td class="acciones">
+
+                        <!-- Editar -->
+                        <button
+                            type="button"
+                            class="btn btn-success btn-sm mx-1"
+                            title="Editar Empresa"
+                            (click)="editarEmpresa(empresa); $event.stopPropagation()">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+
+                        <!-- Activar -->
+                        <button
+                            type="button"
+                            class="btn btn-outline-success btn-sm mx-1"
+                            title="Activar Empresa"
+                            [disabled]="empresa.estado === estadoCliente.Activo"
+                            (click)="activarEmpresa(empresa); $event.stopPropagation()">
+                            <i class="bi bi-person-down"></i>
+                        </button>
+
+                        <!-- Desactivar -->
+                        <button
+                            type="button"
+                            class="btn btn-outline-warning btn-sm mx-1"
+                            title="Marcar como inactiva"
+                            [disabled]="empresa.estado === estadoCliente.Inactivo"
+                            (click)="desactivarEmpresa(empresa); $event.stopPropagation()">
+                            <i class="bi bi-person-up"></i>
+                        </button>
+
+                        <!-- Dar de baja -->
+                        <button
+                            type="button"
+                            class="btn btn-outline-danger btn-sm mx-1"
+                            title="Dar de baja"
+                            [disabled]="empresa.estado === estadoCliente.Baja"
+                            (click)="cambiarEstado(empresa, estadoCliente.Baja); $event.stopPropagation()">
+                            <i class="bi bi-arrow-down-square"></i>
+                        </button>
+
+                        <!-- Eliminar -->
+                        <button
+                            type="button"
+                            class="btn btn-danger btn-sm mx-1"
+                            title="Eliminar registro"
+                            [disabled]="empresa.estado !== estadoCliente.Baja"
+                            (click)="eliminarEmpresa(empresa); $event.stopPropagation()">
+                            <i class="bi bi-trash"></i>
+                        </button>
+
+                    </td>
+                </tr>
+            }
+        </ng-template>
+
+        <!-- Tabla vacía -->
+        <ng-template #emptymessage>
+            <tr>
+                <td colspan="9" class="text-center">
+                    No hay empresas para mostrar.
+                </td>
+            </tr>
+        </ng-template>
+
+    </p-table>
+
+</section>
+
+<!-- Botón para insertar -->
+<section class="mt-2">
+    <div class="card-footer">
+        <button
+            type="button"
+            class="btn btn-primary ms-4"
+            (click)="insertarEmpresa()">
+            <i class="bi bi-plus-square mx-1"></i>
+            Insertar Nuevo Cliente
+        </button>
+    </div>
+</section>

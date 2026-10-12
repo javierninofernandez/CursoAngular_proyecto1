@@ -24,7 +24,7 @@ import { FichaClientePrimengComponent } from '../../components/ficha-cliente-pri
 export class PageFichaClienteFinalComponent implements OnInit {
 
   private route = inject(ActivatedRoute);
-
+  
   // variable para determinar que tipo de formulario queremos mostrar
   tipoFormulario: string = '';   // '' | 'ngform' | 'reactform' | 'primeng'   
   titulo: string = 'Ficha Cliente';

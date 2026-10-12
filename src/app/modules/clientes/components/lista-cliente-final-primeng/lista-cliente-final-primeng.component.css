@@ -1,0 +1,17 @@
+/* Cabecera negra */
+p-table.tabla-empresas .p-datatable-thead > tr > th {
+  background: #000 !important;
+  color: #fff !important;
+}
+
+/* Fila seleccionada en gris */
+p-table.tabla-empresas .p-datatable-tbody > tr.p-highlight > td {
+  background: #d3d3d3 !important;
+  color: #000 !important;
+}
+
+/* Cabecera de la tabla */
+.tabla-empresas .p-datatable-thead > tr > th {
+  background: #000 !important;
+  color: #fff !important;
+}

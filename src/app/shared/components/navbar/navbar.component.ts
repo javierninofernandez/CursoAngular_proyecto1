@@ -39,8 +39,9 @@ export class NavbarComponent {
     },
     { titulo: 'Cliente', icono: 'bi bi-people-fill mx-1', hint: 'Gestion clientes', isDisabled: false,
         hijos : [
-          { titulo: 'Lista Clientes Basic', path: '/lista-clientes', icono: 'bi bi-people-fill mx-1', hint: 'Ver la lista de clientes', isDisabled: false },
-          { titulo: 'Lista Clientes Final', path: '/lista-clientes-final', icono: 'bi bi-people-fill mx-1', hint: 'Ver la lista de clientes', isDisabled: false},
+          { titulo: 'Lista Clientes Basic', path: '/lista-clientes', icono: 'bi bi-people-fill mx-1', hint: 'Lista de clientes basica', isDisabled: false },
+          { titulo: 'Lista Clientes API', path: '/lista-clientes-final',  parametro: 'html', icono: 'bi bi-people-fill mx-1', hint: 'Lista de clientes API', isDisabled: false},
+          { titulo: 'Lista Clientes (primeNG)', path: '/lista-clientes-final',  parametro: 'primeng', icono: 'bi bi-people-fill mx-1', hint: 'lista clientes con componente primeNG', isDisabled: false},
           { titulo: 'div1', isDivider:true },
           { titulo: 'Nuevo Cliente (ngForm)', path: '/ficha-cliente', icono: 'bi bi-people-fill mx-1', hint: 'Ficha cliente', isDisabled: false },
           { titulo: 'div2', isDivider:true },

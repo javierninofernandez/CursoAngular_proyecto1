@@ -17,7 +17,7 @@ export const routes: Routes = [
     { path: 'dashboard', component: DashboardComponent },
 
     { path: 'lista-clientes', component: PageListaClientesComponent },
-    { path: 'lista-clientes-final', component: PageListaClienteFinalComponent },
+    { path: 'lista-clientes-final/:modo', component: PageListaClienteFinalComponent },  //parametro modo para mostrar tabla html vs table primeNg
 
     //Ejemplo basico de paso de parametro :id (editar un cliente concreto)
     { path: 'ficha-cliente', component: PageFichaClienteComponent },                //ficha cliente sin parametro (uso insercion)
