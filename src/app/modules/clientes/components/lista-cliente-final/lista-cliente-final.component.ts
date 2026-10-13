@@ -153,7 +153,7 @@ export class ListaClienteFinalComponent {
     // botones y funciones añadidos para ir a la dicha del cliente seleccionado / insertar uno nuevo
     editarEmpresa(empresa:EmpresaAPI){
       this.router.navigate(['/ficha-cliente/editar', empresa.id], {
-        state: { origen: 'lista-clientes-final'} 
+        state: { origen: 'lista-clientes-final' },        
       });
     }
 

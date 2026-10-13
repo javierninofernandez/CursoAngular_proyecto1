@@ -1,0 +1,24 @@
+
+
+<!-- Incluimos el componente Navbar -->
+<app-navbar></app-navbar>
+
+<!-- Incluimos el componente Header -->
+<app-header [titulo]="'Ejemplo Contador (uso de propiedades vs signals)'"></app-header>
+
+<!-- Contenido Principal de la Página -->
+<main class="flex-grow-1">
+    <div class="mt-2 px-3">
+        <p>Ejemplo basico para ver la diferencia entre el uso de propiedades vs signals()</p>
+        <hr>
+        <h5>Contador por propiedades: {{ contador }}</h5>
+        <h5>Contador por señales: {{ countadorSignal() }}</h5>
+        <hr />
+        <button class="btn btn-success btn-sm mx-1" (click)="increaseBy(1)">Incremetar (+1)</button>
+        <button class="btn btn-success btn-sm mx-1" (click)="increaseBy(-1)">Decrementar (-1)</button>
+        <button class="btn btn-success btn-sm mx-1" (click)="resetCounter()">Resetear Valores</button>
+    </div>
+</main>
+
+<!-- Incluimos el componente Footer -->
+<app-footer></app-footer>

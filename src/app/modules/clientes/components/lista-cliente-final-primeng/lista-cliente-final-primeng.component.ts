@@ -24,7 +24,7 @@ import { TagModule } from 'primeng/tag';
 
 @Component({
   selector: 'app-lista-cliente-final-primeng',
-  imports: [TableModule, TagModule, NgClass],
+  imports: [TableModule, TagModule],
   templateUrl: './lista-cliente-final-primeng.component.html',
   styleUrl: './lista-cliente-final-primeng.component.css'
 })

@@ -7,14 +7,17 @@
 
 <!-- Contenido Principal de la Página -->
 <main class="flex-grow-1">
-    <div class="row py-2 mx-4">
-        <div class="col-auto"><b>Cliente Seleccionado</b></div>
+    <div class="row py-3 mx-4">
+        <div class="col-auto ms-3"><b>Cliente Seleccionado</b></div>
         <div class="col">{{empresaSeleccionada?.codigo | uppercase }} - {{ empresaSeleccionada?.nombre | uppercase}}</div>
-        <div class="col-2 text-end">
-            <label>
-                <input type="checkbox" class="mx-1"  name="checkBajas" #checkBajas value=true [(ngModel)]="filtrarBajas">Filtrar Bajas
-            </label>
-        </div>
+        <!-- si mostramos la lista con una tabla de primeNG eliminamos el checkbox y usamos directamente el filtro del componente -->
+        @if (modo()=='html') {
+            <div class="col-2 text-end">
+                <label>
+                    <input type="checkbox" class="mx-1"  name="checkBajas" #checkBajas value=true [(ngModel)]="filtrarBajas">Filtrar Bajas
+                </label>
+            </div>
+        }
     </div>        
 
     <div class="mt-1 px-2">

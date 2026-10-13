@@ -1,1 +1,281 @@
-<p>ficha-cliente-primeng works!</p>
+
+<section class="mx-3 mx-md-5 my-4">
+  <div class="mt-3">
+
+    <p-card>
+
+      <!-- Cabecera -->
+      <ng-template #header>
+        <div class="bg-primary text-white p-3">
+          <h4 class="m-0">Datos de la empresa</h4>
+        </div>
+      </ng-template>
+
+      <form
+        id="empresaForm"
+        [formGroup]="empresaForm"
+        (ngSubmit)="btnConfirmar()"
+      >
+
+        <!-- Datos generales -->
+        <div class="row g-3">
+
+          <!-- ID -->
+          <div class="col-12 col-md-1">
+            <label for="id" class="form-label fw-bold">ID</label>
+            <input
+              pInputText
+              id="id"
+              formControlName="id"
+              class="w-100"
+              readonly
+            />
+          </div>
+
+          <!-- Código -->
+          <div class="col-12 col-md-3">
+            <label for="codigo" class="form-label fw-bold">Código</label>
+            <input
+              pInputText
+              id="codigo"
+              formControlName="codigo"
+              class="w-100"
+              [ngClass]="{
+                'ng-invalid ng-dirty':
+                  f['codigo'].invalid &&
+                  (f['codigo'].touched || f['codigo'].dirty)
+              }"
+            />
+
+            @if (f['codigo'].invalid &&
+                 (f['codigo'].touched || f['codigo'].dirty)) {
+              <small class="p-error d-block">
+                El código es obligatorio.
+              </small>
+            }
+          </div>
+
+          <!-- NIF -->
+          <div class="col-12 col-md-3">
+            <label for="nif" class="form-label fw-bold">NIF</label>
+            <input
+              pInputText
+              id="nif"
+              formControlName="nif"
+              class="w-100"
+              [ngClass]="{
+                'ng-invalid ng-dirty':
+                  f['nif'].invalid &&
+                  (f['nif'].touched || f['nif'].dirty)
+              }"
+            />
+
+            @if (f['nif'].invalid &&
+                 (f['nif'].touched || f['nif'].dirty)) {
+              <small class="p-error d-block">
+                El NIF es obligatorio.
+              </small>
+            }
+          </div>
+
+          <!-- Estado -->
+          <div class="col-12 col-md-5">
+            <label for="estado" class="form-label fw-bold">Estado</label>
+            <p-select
+              inputId="estado"
+              formControlName="estado"
+              [options]="estadosCliente"
+              optionLabel="texto"
+              optionValue="valor"
+              placeholder="Seleccione un estado"
+              [showClear]="true"
+              styleClass="w-100"
+              [ngClass]="{
+                'ng-invalid ng-dirty':
+                  f['estado'].invalid &&
+                  (f['estado'].touched || f['estado'].dirty)
+              }"
+            />
+
+            @if (f['estado'].invalid &&
+                 (f['estado'].touched || f['estado'].dirty)) {
+              <small class="p-error d-block">
+                Debe seleccionar un estado.
+              </small>
+            }
+          </div>
+
+          <!-- Nombre -->
+          <div class="col-12">
+            <label for="nombre" class="form-label fw-bold">Nombre</label>
+            <input
+              pInputText
+              id="nombre"
+              formControlName="nombre"
+              class="w-100"
+              [ngClass]="{
+                'ng-invalid ng-dirty':
+                  f['nombre'].invalid &&
+                  (f['nombre'].touched || f['nombre'].dirty)
+              }"
+            />
+
+            @if (f['nombre'].invalid &&
+                 (f['nombre'].touched || f['nombre'].dirty)) {
+              <small class="p-error d-block">
+                El nombre es obligatorio.
+              </small>
+            }
+          </div>
+
+        </div>
+
+        <!-- Dirección -->
+        <div class="mt-4">
+          <p-divider align="left">
+            <span class="fw-bold">Dirección</span>
+          </p-divider>
+        </div>
+
+        <div class="row g-3" formGroupName="direccion">
+
+          <!-- Calle -->
+          <div class="col-12 col-md-5">
+            <label for="calle" class="form-label fw-bold">Calle</label>
+            <input
+              pInputText
+              id="calle"
+              formControlName="calle"
+              class="w-100"
+              [ngClass]="{
+                'ng-invalid ng-dirty':
+                  direccion.get('calle')?.invalid &&
+                  (direccion.get('calle')?.touched ||
+                   direccion.get('calle')?.dirty)
+              }"
+            />
+
+            @if (direccion.get('calle')?.invalid &&
+                 (direccion.get('calle')?.touched ||
+                  direccion.get('calle')?.dirty)) {
+              <small class="p-error d-block">
+                La calle es obligatoria.
+              </small>
+            }
+          </div>
+
+          <!-- Número -->
+          <div class="col-6 col-md-1">
+            <label for="numero" class="form-label fw-bold">Número</label>
+            <p-inputnumber
+              inputId="numero"
+              formControlName="numero"
+              [useGrouping]="false"
+              styleClass="w-100"
+              inputStyleClass="w-100"
+            />
+          </div>
+
+          <!-- Código postal -->
+          <div class="col-6 col-md-2">
+            <label for="codigopostal" class="form-label fw-bold">
+              C. Postal
+            </label>
+            <input
+              pInputText
+              id="codigopostal"
+              formControlName="codigopostal"
+              class="w-100"
+            />
+          </div>
+
+          <!-- Población -->
+          <div class="col-12 col-md-2">
+            <label for="poblacion" class="form-label fw-bold">
+              Población
+            </label>
+            <input
+              pInputText
+              id="poblacion"
+              formControlName="poblacion"
+              class="w-100"
+            />
+          </div>
+
+          <!-- Provincia -->
+          <div class="col-12 col-md-2">
+            <label for="provincia" class="form-label fw-bold">
+              Provincia
+            </label>
+            <input
+              pInputText
+              id="provincia"
+              formControlName="provincia"
+              class="w-100"
+            />
+          </div>
+
+        </div>
+
+      </form>
+
+      <!-- Botones -->
+      <ng-template #footer>
+        <div class="d-flex justify-content-end gap-2 flex-wrap">
+
+          @if (empresaForm.disabled) {
+
+            @if (volverVisible) {
+              <p-button
+                type="button"
+                label="Volver"
+                icon="pi pi-arrow-left"
+                severity="secondary"
+                (onClick)="btnVolver()"
+              />
+            }
+
+            @if (empresa.id != undefined) {
+              <p-button
+                type="button"
+                label="Editar"
+                icon="pi pi-pencil"
+                (onClick)="btnEditar()"
+              />
+            }
+
+            <p-button
+              type="button"
+              label="Insertar"
+              icon="pi pi-plus"
+              (onClick)="btnInsertar()"
+            />
+
+          } @else {
+
+            <p-button
+              type="submit"
+              form="empresaForm"
+              label="Confirmar"
+              icon="pi pi-check"
+              severity="success"
+              [disabled]="empresaForm.invalid"
+            />
+
+            <p-button
+              type="button"
+              label="Cancelar"
+              icon="pi pi-times"
+              severity="danger"
+              (onClick)="btnCancelar()"
+            />
+
+          }
+
+        </div>
+      </ng-template>
+
+    </p-card>
+
+  </div>
+</section>

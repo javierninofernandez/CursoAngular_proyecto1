@@ -1,17 +1,58 @@
-/* Cabecera negra */
-p-table.tabla-empresas .p-datatable-thead > tr > th {
-  background: #000 !important;
-  color: #fff !important;
+/* Tabla de empresas */
+:host ::ng-deep .tabla-empresas .p-datatable-table {
+    border-collapse: separate;
+    border-spacing: 0;
 }
 
-/* Fila seleccionada en gris */
-p-table.tabla-empresas .p-datatable-tbody > tr.p-highlight > td {
-  background: #d3d3d3 !important;
-  color: #000 !important;
+/* Cabecera principal */
+:host ::ng-deep .tabla-empresas .p-datatable-thead > tr:first-child > th {
+    background-color: #1e3a5f;
+    color: #fff;
+    font-weight: 600;
+    text-align: center;
+    padding: 0.85rem 0.75rem;
+    border-color: #365779;
+    vertical-align: middle;
 }
 
-/* Cabecera de la tabla */
-.tabla-empresas .p-datatable-thead > tr > th {
-  background: #000 !important;
-  color: #fff !important;
+/* Fila de filtros */
+:host ::ng-deep .tabla-empresas .p-datatable-thead > tr:nth-child(2) > th {
+    background-color: #e8eef5;
+    color: #1e3a5f;
+    padding: 0.5rem;
+    border-color: #cbd5e1;
+}
+
+/* Celdas del cuerpo */
+:host ::ng-deep .tabla-empresas .p-datatable-tbody > tr > td {
+    padding: 0.65rem 0.75rem;
+    border-color: #dbe3ec;
+    transition: background-color 0.2s ease;
+}
+
+/* Fila seleccionada: todas las celdas excepto acciones */
+:host ::ng-deep .tabla-empresas
+.p-datatable-tbody > tr.p-datatable-row-selected > td:not(.acciones) {
+    background-color: #6a6eaa !important;
+    color: #fff !important;
+    border-color: #9fc5f8;
+}
+
+/* Columna de acciones: fondo blanco */
+:host ::ng-deep .tabla-empresas
+.p-datatable-tbody > tr.p-datatable-row-selected > td.acciones {
+    background-color: #fff !important;
+    color: inherit !important;
+}
+
+/* Botones: conservar los estilos originales de Bootstrap */
+:host ::ng-deep .tabla-empresas
+.p-datatable-tbody > tr.p-datatable-row-selected > td.acciones button {
+    opacity: 1;
+}
+
+/* Hover sobre filas no seleccionadas */
+:host ::ng-deep .tabla-empresas
+.p-datatable-tbody > tr:not(.p-datatable-row-selected):hover > td {
+    background-color: #f0f6fc;
 }

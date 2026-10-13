@@ -30,7 +30,7 @@
 
     <tbody>
         <!-- @for (empresa of servicioCientes.getListaEmpresas(); track $index) { -->
-        @for (empresa of listaEmpresas; track $index) {
+        @for (empresa of listaEmpresas; track empresa.id) {
             @if ((!filtrarBajas()) || (filtrarBajas() && empresa.estado!=estadoCliente.Baja)) {
             <!-- Usando [ngClass]-->    
             <tr (click)="seleccionarEmpresa(empresa)">

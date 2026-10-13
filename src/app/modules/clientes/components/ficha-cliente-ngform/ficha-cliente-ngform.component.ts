@@ -1,19 +1,22 @@
 /* 
   Formulario Basado en plantillas usando FormsModule/ngForm 
-  - [(ngModel)]="empresa.direccion.calle"
-  - name="calle"
-  - #calle="ngModel"
-  - required
-  - [disabled]="!modoEdicion"
+  - Definicion del formulario 
+    - <form #empresaForm="ngForm" (ngSubmit)="btnConfirmar(empresaForm)">
+  - Para los campos
+    - [(ngModel)]="empresa.direccion.calle"
+    - name="calle"
+    - #calle="ngModel"
+    - required
+    - [disabled]="!modoEdicion"
 
   Utilización del servicio con API's 
   Uso extendido del Router
     - Llamadas con parametros (ActivatedRoute)
-    - Volver (location.back)
+  Gestion valores de navegación (location): volve a pagina anterio location.back();
 */
-import { Component, input, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { ClientesServiceHttp } from '../../services/clientes.http.service';
 import { EmpresaAPI, EstadoCliente, EstadoFormulario } from '../../models/cliente.model';
@@ -28,14 +31,11 @@ export class FichaClienteNgformComponent implements OnInit {
   
   // gestion del router para obtener el paso de parametros (injeccion para su uso de ActivateRoute y Location)
   private route = inject(ActivatedRoute);
-  private router = inject(Router);
   private location = inject(Location);
-  clienteId = this.route.snapshot.paramMap.get('id');  // obtencion del parametro -> el valor es siempre un string
-
+  
   // injeccion para uso del servicio
   servicioCliente = inject(ClientesServiceHttp);
-  
-  
+    
   //#region - declaracion de variables internas del componente
   public readonly estadoFormulario = EstadoFormulario;
 
@@ -45,6 +45,7 @@ export class FichaClienteNgformComponent implements OnInit {
   }));  
   estado:string = '';
   
+  clienteId: string | null = null;
   componenteOrigen: string = '';
   volverVisible: boolean = false;
 
@@ -58,6 +59,10 @@ export class FichaClienteNgformComponent implements OnInit {
 
 
   ngOnInit(): void {
+    // obtener el parametro id de la ruta (2 alternativas)
+    this.clienteId = this.route.snapshot.paramMap.get('id');  
+    //this.route.paramMap.subscribe(params => { this.clienteId = params.get('idCliente'); });
+
     // obtener el componente desde el que se le llama
     const origen = history.state.origen;
     console.log('Navegación iniciada desde:', (origen) ? origen : 'sin definir');

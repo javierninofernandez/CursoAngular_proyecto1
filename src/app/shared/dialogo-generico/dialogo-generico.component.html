@@ -1,0 +1,39 @@
+<div class="flex align-items-start gap-3">
+  <i
+    class="pi text-2xl"
+    [ngClass]="{
+      'pi-info-circle': datos.tipo === 'INFO',
+      'pi-exclamation-triangle':
+        datos.tipo === 'CONFIRMACION',
+      'pi-question-circle':
+        datos.tipo === 'CONSULTA',
+      'pi-times-circle': datos.tipo === 'ERROR'
+    }">
+  </i>
+
+  <div>{{ datos.mensaje }}</div>
+</div>
+
+<div class="flex justify-content-end gap-2 mt-4">
+
+  <p-button
+    *ngIf="mostrarCancelar"
+    [label]="datos.textoCancelar || 'Cancelar'"
+    severity="secondary"
+    (onClick)="ejecutar('CANCELAR')">
+  </p-button>
+
+  <p-button
+    *ngIf="mostrarAceptar"
+    [label]="datos.textoAceptar || 'Aceptar'"
+    [severity]="datos.tipo === 'CONFIRMACION' ? 'danger' : 'primary'"
+    (onClick)="ejecutar('ACEPTAR')">
+  </p-button>
+
+  <p-button
+    *ngIf="mostrarOk"
+    [label]="datos.textoOk || 'OK'"
+    (onClick)="ejecutar('OK')">
+  </p-button>
+
+</div>
