@@ -1,0 +1,206 @@
+<section class="px-3 mx-2 mt-2">
+
+    <div class="mb-3" style="background-color: black; overflow: hidden;">
+        <img style="height: 70px; width: auto; padding: 5px;" 
+            src="/images/ejercito_de_tierra.png"
+            alt="Logo_ejercito_tierra">
+    </div>
+
+
+    <div class="flex align-items-center gap-2 mb-3">
+        <label for="filtroOrigen" class="font-semibold">
+            Filtrar por Tipo Tramite: 
+        </label>
+
+        <p-select class="mx-2"
+            inputId="filtroOrigen"
+            [options]="opcionesFiltroTipoTramnite"
+            [(ngModel)]="tipoTramiteSeleccionado"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="Filtro Tipo Tramite"
+            [showClear]="true"
+            (onChange)="filtrarPorTipoTramite()"
+           >
+        </p-select>
+    </div>
+
+    <hr>
+
+    <p-table
+        [value]="listaTramitesFiltrados"
+        dataKey="id"
+        styleClass="tabla-empresas"
+        [tableStyle]="{ 'min-width': '70rem' }"
+        [(selection)]="tramiteSeleccionado"
+        selectionMode="single"                
+        stripedRows 
+        [metaKeySelection]="false"
+        [paginator]="true"
+        [rows]="10"
+        [rowsPerPageOptions]="[5, 10, 20]"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} empresas"
+        [rowHover]="true"    
+        responsiveLayout="scroll"
+        size="small"
+        (onRowSelect)="alSeleccionarFila($event.data)">
+
+        <!-- Cabecera -->
+        <ng-template #header>
+            <tr>
+                <th>Expediente</th>
+                <th>Reservista</th>
+                <th>Tipo Tramite</th>
+                <th>Origen</th>
+                <th>Doc. Válida</th>
+                <th>Estado Actual</th>
+                <th>Acciones</th>
+            </tr>
+
+            <!-- fila de filtros -->
+            <tr>
+                <th>
+                    <p-columnFilter
+                        type="string"
+                        field="expediente"
+                        display="menu"
+                        placeholder="Buscar Expediente" />
+                </th>
+
+                <th>
+                    <p-columnFilter
+                        type="text"
+                        field="reservista.nombre"
+                        display="row"
+                        placeholder="Buscar Reservista" />
+                </th>
+
+                <th>
+                    <p-columnFilter
+                        type="text"
+                        field="tipoTramite"
+                        display="row"
+                        placeholder="Buscar tipoTramite" />
+                </th>
+
+                <th>
+                    <p-columnFilter
+                        type="text"
+                        field="origen"
+                        display="row"
+                        placeholder="Buscar origen" />
+                </th>
+
+                <th>
+                    <p-columnFilter
+                        field="docValida"
+                        matchMode="equals"
+                        display="menu"
+                        [showMatchModes]="false"
+                        [showOperator]="false"
+                        [showAddButton]="false"
+                        [showApplyButton]="false">
+
+                        <ng-template #filter let-value let-filter="filterCallback">
+                            <p-select
+                                [options]="opcionesBooleanas"
+                                [ngModel]="value"
+                                (ngModelChange)="filter($event)"
+                                optionLabel="label"
+                                optionValue="value"
+                                placeholder="Todos"
+                                [showClear]="true"
+                                styleClass="w-full">
+                            </p-select>
+                        </ng-template>
+                    </p-columnFilter>
+                </th>
+
+                <th>
+                    <p-columnFilter
+                        type="text"
+                        field="estadoActual"
+                        display="row"
+                        placeholder="Buscar estadoActual" />
+                </th>
+                <th></th> 
+            </tr>            
+        </ng-template>
+
+        <!-- Filas -->
+        <ng-template #body let-tramite>
+
+                <!-- <tr (click)="seleccionarEmpresa(empresa)">  // ahora lo gestiona onRowSelected del componente -->
+                <tr [pSelectableRow]="tramite">
+                    <td>{{ tramite.expediente }}</td>
+                    <td>{{ tramite.reservista.apellidos }},{{ tramite.reservista.nombre }}</td>
+                    <td>
+                         <p-tag [value]="tramite.tipoTramite" [severity]="'contrast'" />
+                    </td>
+                    <td>
+                        <p-tag [value]="tramite.origen" [severity]="getOrigen(tramite.origen)" />
+                    </td>
+                    <td class="text-center">
+                        <i
+                            [ngClass]="tramite.docValida
+                                ? 'bi bi-check-circle-fill text-success'
+                                : 'bi bi-x-circle-fill text-danger'"
+                            [title]="tramite.docValida ? 'Documento válido' : 'Documento no válido'">
+                        </i>
+                    </td>
+                    <td>
+                        <p-tag [value]="tramite.estadoActual" [severity]="getEstadoTramite( tramite.estadoActual)" />
+                    </td>
+
+                    <!-- Acciones -->
+                    <td class="acciones">
+                        @switch (tramite.estadoActual) {
+                            @case (EstadoTramite.revisandoDoc) {
+                                <button
+                                    type="button"
+                                    class="btn btn-secondary btn-sm mx-1"
+                                    title="Editar Empresa"
+                                    (click)="cambiarEstadoTramite(tramite,EstadoTramite.envioCGET); $event.stopPropagation()">
+                                    <i class="bi bi-send mx-1"></i>Enviar CGET
+                                </button> 
+                            }
+                            @case (EstadoTramite.envioCGET) {
+                                <button
+                                    type="button"
+                                    class="btn btn-secondary btn-sm mx-1"
+                                    title="Editar Empresa"
+                                    (click)="cambiarEstadoTramite(tramite,EstadoTramite.recibidoSecrets); $event.stopPropagation()">
+                                    <i class="bi bi-building-gear mx-1"></i>Recibido SECRETS
+                                </button> 
+                            }
+                            @case (EstadoTramite.recibidoSecrets) {
+                                <button
+                                    type="button"
+                                    class="btn btn-secondary btn-sm mx-1"
+                                    title="Editar Empresa"
+                                    (click)="cambiarEstadoTramite(tramite,EstadoTramite.entregadoConfirmado); $event.stopPropagation()">
+                                    <i class="bi bi-check-all mx-1"></i>Confirmar Entrega
+                                </button> 
+                            }
+                        }
+
+                    </td>
+                </tr>
+            
+        </ng-template>
+
+        <!-- Tabla vacía -->
+        <ng-template #emptymessage>
+            <tr>
+                <td colspan="9" class="text-center">
+                    No hay empresas para mostrar.
+                </td>
+            </tr>
+        </ng-template>
+
+    </p-table>
+
+</section>
+
+

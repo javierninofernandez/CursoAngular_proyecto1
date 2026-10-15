@@ -48,7 +48,7 @@ export class NavbarComponent {
           { titulo: 'Lista Clientes API', path: '/lista-clientes-final',  parametro: 'html', icono: 'bi bi-card-list mx-1', hint: 'Lista de clientes API', isDisabled: false},
           { titulo: 'Lista Clientes (primeNG)', path: '/lista-clientes-final',  parametro: 'primeng', icono: 'bi bi-card-list mx-1', hint: 'lista clientes con componente primeNG', isDisabled: false},
           { titulo: 'div1', isDivider:true },
-          { titulo: 'Nuevo Cliente (ngForm)', path: '/ficha-cliente', icono: 'bi bi-people-fill mx-1', hint: 'Ficha cliente', isDisabled: false },
+          { titulo: 'Nuevo Cliente', path: '/ficha-cliente', icono: 'bi bi-people-fill mx-1', hint: 'Ficha cliente', isDisabled: false },
           { titulo: 'div2', isDivider:true },
           // items de menu con los diferentes formatos de formulario pasados como parametro
           { titulo: 'Nuevo Cliente (ngForm)', path: '/ficha-cliente-final', parametro: 'ngform', icono: 'bi bi-people-fill mx-1', hint: 'Ficha cliente', isDisabled: false },
@@ -62,6 +62,7 @@ export class NavbarComponent {
           { titulo: 'Ficha Contacto', path: '/contactos/ficha-contactos', icono: 'bi bi-person-vcard mx-1', hint: 'prueba', isDisabled: false },          
         ]
     },    
+    { titulo: 'Diplomas', path: '/diplomas', icono: 'bi bi-award mx-1 mx-1', hint: 'Tramites Dilomas', isDisabled: false },
   ];
 
   // funcion para evaluar si esta activo un ItemMenu hijo -> Marcar activo el Padre

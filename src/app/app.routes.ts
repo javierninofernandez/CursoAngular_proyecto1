@@ -12,6 +12,7 @@ import { PageContadorComponent } from './modules/ejemplos/page-contador/page-con
 import { LoginComponent } from './core/auth/pages/login/login.component';
 import { authGuard } from './core/auth/auth.guards'
 import { PageComunicacionPadreHijoComponent } from './modules/ejemplos/ejemplo-comunicacion-padre-hijo/page-comunicacion-padre-hijo/page-comunicacion-padre-hijo.component';
+import { PageDiplomasComponent } from './modules/diplomas/pages/page-diplomas/page-diplomas.component';
 
 
 export const routes: Routes = [
@@ -51,6 +52,8 @@ export const routes: Routes = [
     },
     */
 
+    { path: 'diplomas' , component: PageDiplomasComponent, canActivate: [authGuard]},
+    
     { path:'**', component:PageNotfoundComponent},      
     //{ path:'**', redirectTo:'home'} // redirigir a otra pagina por defecto de nuestra app (ej. dashboard/home/...)
 ];
