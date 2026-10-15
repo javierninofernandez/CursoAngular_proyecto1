@@ -27,7 +27,10 @@ export class ListaEjemploComponent {
   personaSeleccionada: Persona | null = null;
 
   constructor() {
-    // Seleccionar la primera persona cuando llegue la lista inicial.
+    // Al inicializarse, effect() comprueba el valor del input().
+    // Si la lista está vacía, espera a que cambie.
+    // Cuando la lista contiene datos, selecciona la primera empresa.
+    // Usamos la variable primeraCargaRealizada evita que vuelva a seleccionarla si la lista cambia posteriormente.    
     effect(() => {
       const personas = this.listaPersonas();
       if (personas.length > 0 && this.personaSeleccionada === null) {
