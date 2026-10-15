@@ -1,8 +1,7 @@
 import { Injectable, inject } from '@angular/core';
-import { DialogService } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
-
+import { DialogService } from 'primeng/dynamicdialog';
 import { DialogoGenericoComponent } from './dialogo-generico.component';
 import { DialogoConfig, AccionDialogo} from './dialogo.models';
 
@@ -13,6 +12,8 @@ export class DialogoService {
 
   private dialogService = inject(DialogService);
 
+
+  // metodo general para abrir el modal y retornar el valor
   abrir(config: DialogoConfig): Observable<AccionDialogo> {
 
     const ref = this.dialogService.open(
@@ -34,6 +35,9 @@ export class DialogoService {
       )
     );
   }
+
+
+  // Metodos especificos
 
   info(titulo: string, mensaje: string):
     Observable<AccionDialogo> {
@@ -74,4 +78,5 @@ export class DialogoService {
       tipo: 'CONSULTA'
     });
   }
+
 }

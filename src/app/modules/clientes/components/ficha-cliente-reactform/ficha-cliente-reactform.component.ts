@@ -5,7 +5,7 @@ en el .ts del componente con FormGroup y FormControl.
 Uso de metodos del formulario reactivo enabled(), disabled() para controlar estado
 */
 import { Component, inject  } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule} from '@angular/forms';
 
@@ -22,7 +22,6 @@ export class FichaClienteReactformComponent {
 
   // gestion del router para obtener el paso de parametros (injeccion para su uso de ActivateRoute y Location)
   private route = inject(ActivatedRoute);
-  private router = inject(Router);
   private location = inject(Location);
   clienteId = this.route.snapshot.paramMap.get('id');  // obtencion del parametro -> el valor es siempre un string  
 

@@ -58,8 +58,8 @@ export class NavbarComponent {
     },
     { titulo: 'Contactos', icono: 'bi bi-people-fill mx-1', hint: 'contactos', isDisabled: false, 
         hijos: [
-          { titulo: 'Lista', path: '/contactos/lista-contactos', icono: 'bi bi-card-list mx-1', hint: 'Ver el panel de control', isDisabled: false },
-          { titulo: 'Ficha', path: '/contactos/ficha-contactos', icono: 'bi bi-person-vcard mx-1', hint: 'prueba', isDisabled: false },          
+          { titulo: 'Lista Contactos', path: '/contactos/lista-contactos', icono: 'bi bi-card-list mx-1', hint: 'Ver el panel de control', isDisabled: false },
+          { titulo: 'Ficha Contacto', path: '/contactos/ficha-contactos', icono: 'bi bi-person-vcard mx-1', hint: 'prueba', isDisabled: false },          
         ]
     },    
   ];

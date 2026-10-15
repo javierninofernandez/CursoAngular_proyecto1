@@ -4,8 +4,9 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule,  Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthService } from '../../auth.service';
+import { Router, ActivatedRoute } from '@angular/router';
+//import { AuthService } from '../../auth.service';
+import { AuthService } from '../../auth.service.fake';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +20,7 @@ export class LoginComponent {
   private readonly fb = inject(FormBuilder);
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
 
   loading = false;
   error = '';
@@ -41,10 +43,19 @@ export class LoginComponent {
       next: () => {
         this.router.navigate(['/dashboard']);
       },
-      error: () => {
-        this.error = 'Usuario o contraseña incorrectos';
+      error: (err) => {
+        console.error('Error en el login:', err);
+        console.error('Estado HTTP:', err.status);
+        console.error('Respuesta:', err.error);
+
+        this.error =
+          `Error de login: HTTP ${err.status}`;
+
         this.loading = false;
-      }
+      },
+        complete: () => {
+          this.loading = false;
+        }      
     });
   }
 }

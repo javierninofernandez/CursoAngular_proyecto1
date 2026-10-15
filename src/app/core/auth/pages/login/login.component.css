@@ -1,0 +1,61 @@
+/* login.component.css */
+
+.login-card {
+  width: 100%;
+  max-width: 440px;
+  background-color: #ffffff;
+  transition: box-shadow 0.3s ease;
+}
+
+.login-card:hover {
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.12) !important;
+}
+
+.login-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0d6efd, #4f46e5);
+  color: #ffffff;
+  font-size: 2rem;
+}
+
+.login-card .form-control {
+  border-radius: 0.65rem;
+  border-color: #dee2e6;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.login-card .form-control:focus {
+  border-color: #86b7fe;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+}
+
+.login-card .btn-primary {
+  border-radius: 0.65rem;
+  padding: 0.8rem 1rem;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.login-card .btn-primary:not(:disabled):hover {
+  transform: translateY(-1px);
+}
+
+.login-card .btn-primary:disabled {
+  cursor: not-allowed;
+}
+
+.login-card .alert {
+  border-radius: 0.65rem;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 576px) {
+  .login-card {
+    max-width: 100%;
+  }
+}
+

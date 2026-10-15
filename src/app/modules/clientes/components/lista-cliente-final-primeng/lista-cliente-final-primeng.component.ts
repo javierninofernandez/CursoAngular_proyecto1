@@ -13,18 +13,24 @@ Tabla adaptable manualmente			  responsiveLayout="scroll"
 
 import { Component, output, input, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgClass } from '@angular/common';
 import { EmpresaAPI,EstadoCliente } from '../../models/cliente.model';
 import { ClientesServiceHttp } from '../../services/clientes.http.service'
 
+// componentes primeNG para la tabla
 import { TableModule } from 'primeng/table';  // importamos componente table de primeNG
 import { TagModule } from 'primeng/tag';
+// compoennete generico basado en dialog primeNG para consultas 
+//import { DialogoGenericoComponent } from '../../../../shared/components/dialogo-generico/dialogo-generico.component';
+//import { DialogService } from 'primeng/dynamicdialog';
+import { DialogoService } from '../../../../shared/components/dialogo-generico/dialogo-generico.service';
 
 
 
 @Component({
   selector: 'app-lista-cliente-final-primeng',
-  imports: [TableModule, TagModule],
+  imports: [
+    TableModule, TagModule,     
+  ],
   templateUrl: './lista-cliente-final-primeng.component.html',
   styleUrl: './lista-cliente-final-primeng.component.css'
 })
@@ -46,10 +52,15 @@ export class ListaClienteFinalPrimengComponent {
     //#region - inyección del servicio
     // tradicional --> constructor(public clienteService: ClienteService) {}    
     private servicioCientes = inject(ClientesServiceHttp);    // recomendada en las ultimas versiones
-    //#endregion
 
     //injeccion del router para navegar desde codigo a ficha_cliente
     private router = inject(Router);
+
+    // servicio para llamadas y uso de dialog-generico
+    private dialogo = inject(DialogoService);  // servicio para uso de dialog-generico 
+
+    //#endregion
+
 
     // utilizamos el evento OnInt del ciclo de vida para cargar los datos de la API 
     ngOnInit(): void {
@@ -140,20 +151,24 @@ export class ListaClienteFinalPrimengComponent {
       }); 
     }
 
-    eliminarEmpresa(empresa: EmpresaAPI): void { 
-      if (confirm(`¿Eliminar la empresa ${empresa.nombre}?`)) {       
-        this.servicioCientes.eliminarEmpresa(empresa).subscribe({
-          next: () => {
-            console.log('Empresa Eliminada:', empresa );
-            this.getListaEmpresas();
-          },
-          error: (error) => {console.error('Error eliminando empresa:',error);
-          }
-        });     
-      }
-    }    
-
-    //#endregion - metodos que interactuan con el servicio/apis
+    async eliminarEmpresa(empresa: EmpresaAPI) { 
+      //if (confirm(`¿Eliminar la empresa ${empresa.nombre}?`)) {  
+      // const accion = await this.dialogoComponent.dialogoConfirmacion('Confirmar','¿Seguro que desea eliminar el registro');
+      // if (accion === 'ACEPTAR') {
+      this.dialogo.confirmar('Confirmar Eliminar','¿Seguro que deseas eliminar este cliente?').subscribe(accion => {
+        if (accion === 'ACEPTAR') {
+            this.servicioCientes.eliminarEmpresa(empresa).subscribe({
+              next: () => {
+                console.log('Empresa Eliminada:', empresa );
+                this.getListaEmpresas();
+              },
+              error: (error) => {
+                console.error('Error eliminando empresa:',error); 
+              }
+            });           
+        }    
+      });
+    }
 
 
     // botones y funciones añadidos para ir a la dicha del cliente seleccionado / insertar uno nuevo
@@ -168,7 +183,10 @@ export class ListaClienteFinalPrimengComponent {
         state: { origen: 'lista-clientes-final'} 
       });
     }
-    
+        
+    //#endregion - metodos que interactuan con el servicio/apis
+
+   
 
     //#region - eventos p-table de primeNg 
 
@@ -177,7 +195,7 @@ export class ListaClienteFinalPrimengComponent {
       this.seleccionarEmpresa(empresa);
     }    
 
-getSeverity(status: EstadoCliente) {
+    getSeverity(status: EstadoCliente) {
         switch (status) {
             case EstadoCliente.Activo:
                 return 'success';
