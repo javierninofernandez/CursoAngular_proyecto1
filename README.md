@@ -57,3 +57,9 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+
+## ------------------------------------------------------
+## cuando se descarga el proyecto 
+primero ejecutar en la raiz del mismo "npm install" para regerenrar todas las dependencias y linrerias de terceros instaladas en node_modules
+despues ya se puede ejecutar con "ng serve"

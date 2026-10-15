@@ -39,7 +39,7 @@ export class NavbarComponent {
     { titulo: 'Ejemplos', icono: '<i class="bi bi-hexagon-fill"></i>', hint: 'pruebas', isDisabled: false, 
         hijos: [
           { titulo: 'Contador (signals)', path: '/contador', icono: 'bi bi-123 mx-1', hint: 'Ver el panel de control', isDisabled: false },
-          { titulo: 'pendiente', path: '/pendiente', icono: 'bi bi-hexagon-fill mx-1', hint: 'prueba', isDisabled: true },          
+          { titulo: 'Comunicacion Padre<->Hijo', path: '/ejemplo-comunicacion', icono: 'bi bi-hexagon-fill mx-1', hint: 'prueba', isDisabled: false },          
         ]
     },
     { titulo: 'Cliente', icono: 'bi bi-people-fill mx-1', hint: 'Gestion clientes', isDisabled: false,

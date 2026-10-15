@@ -1,0 +1,72 @@
+<section class="px-3 mx-2">
+
+    <div class="row py-2">
+        <div class="col-auto"><b>Cliente Seleccionado</b></div>
+        <div class="col">{{personaSeleccionada?.nombre?.toUpperCase() }}</div>
+        <div class="col-2 text-end">
+            <label>
+                <!-- <input type="checkbox" class="mx-1"  name="checkBajas" #checkBajas value=true [(ngModel)]="filtrarBajas">Filtrar Bajas -->
+            </label>
+        </div>
+    </div>
+
+    <p-table
+        [value]="listaPersonas()"
+        dataKey="id"
+        [(selection)]="personaSeleccionada"
+        styleClass="tabla-empresas"
+        [tableStyle]="{ 'min-width': '70rem' }"
+        showGridlines
+        selectionMode="single"        
+        [metaKeySelection]="false"
+        [paginator]="true"
+        [rows]="10"
+        [rowsPerPageOptions]="[5, 10, 20]"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} empresas"
+        [rowHover]="true"    
+        responsiveLayout="scroll"
+        size="small"
+        (onRowSelect)="alSeleccionarFila($event.data)">
+
+        <!-- Cabecera -->
+        <ng-template #header>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Edad</th>
+                <th>Nif</th>
+                <th>Nacionalidad</th>                
+            </tr>    
+        </ng-template>
+
+        <!-- Filas -->
+        <ng-template #body let-persona>
+
+            <!-- @if (!filtrarBajas() ||
+                 (filtrarBajas() && empresa.estado !== estadoCliente.Baja)) { -->
+
+                <tr [pSelectableRow]="persona">
+                    <td>{{ persona.id }}</td>
+                    <td>{{ persona.nombre }}</td>
+                    <td>{{ persona.edad }}</td>
+                    <td>{{ persona.nif }}</td>
+                    <td>{{ persona.nacionalidad }}</td>         
+                </tr>
+            <!-- } -->
+        </ng-template>
+
+        <!-- Tabla vacía -->
+        <ng-template #emptymessage>
+            <tr>
+                <td colspan="9" class="text-center">
+                    No hay empresas para mostrar.
+                </td>
+            </tr>
+        </ng-template>
+
+    </p-table>
+
+</section>
+
+

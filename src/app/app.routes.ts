@@ -8,9 +8,10 @@ import { PageListaClienteFinalComponent } from './modules/clientes/pages/page-li
 import { PageFichaClienteComponent } from './modules/clientes/pages/page-ficha-cliente/page-ficha-cliente.component';
 import { PageNotfoundComponent } from './shared/pages/page-notfound/page-notfound.component';
 import { PageFichaClienteFinalComponent } from './modules/clientes/pages/page-ficha-cliente-final/page-ficha-cliente-final.component';
-import { PageContadorComponent } from './shared/pages/page-contador/page-contador.component';
+import { PageContadorComponent } from './modules/ejemplos/page-contador/page-contador.component';
 import { LoginComponent } from './core/auth/pages/login/login.component';
 import { authGuard } from './core/auth/auth.guards'
+import { PageComunicacionPadreHijoComponent } from './modules/ejemplos/ejemplo-comunicacion-padre-hijo/page-comunicacion-padre-hijo/page-comunicacion-padre-hijo.component';
 
 
 export const routes: Routes = [
@@ -21,8 +22,11 @@ export const routes: Routes = [
     { path:'home', component:HomeComponent, canActivate: [authGuard]},    //localhost:4200/home
     { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] },
 
+    // ejemplos pùntuales
     { path: 'contador', component: PageContadorComponent, canActivate: [authGuard] },
+    { path: 'ejemplo-comunicacion', component: PageComunicacionPadreHijoComponent, canActivate: [authGuard] },
 
+    // area de clientes
     { path: 'lista-clientes', component: PageListaClientesComponent, canActivate: [authGuard] },
     { path: 'lista-clientes-final/:modo', component: PageListaClienteFinalComponent, canActivate: [authGuard] },  //parametro modo para mostrar tabla html vs table primeNg
 
@@ -36,6 +40,16 @@ export const routes: Routes = [
 
     //Ejemplo de LazzyLoading - Cargando rutas hijas desde el router del modulo contactos
     { path: 'contactos', loadChildren: () => import('./modules/contactos/contactos.module').then( m => m.ContactosModule) , canActivate: [authGuard]},
+
+    // Ejemplo equivalente de carga perezosa con componentes standalon que no requieren estar declarados en un modulo
+    /*
+    { path: 'contactos',
+      children: [
+        { path: 'lista-contactos' , loadComponent: () => import('./modules/contactos/pages/page-lista-contactos/page-lista-contactos.component').then( m => m.PageListaContactosComponent ) , canActivate:[authGuard]},
+        { path: 'ficha-contactos' , loadComponent: () => import('./modules/contactos/pages/page-ficha-contactos/page-ficha-contactos.component').then( m => m.PageFichaContactosComponent ) , canActivate:[authGuard]},
+      ]
+    },
+    */
 
     { path:'**', component:PageNotfoundComponent},      
     //{ path:'**', redirectTo:'home'} // redirigir a otra pagina por defecto de nuestra app (ej. dashboard/home/...)

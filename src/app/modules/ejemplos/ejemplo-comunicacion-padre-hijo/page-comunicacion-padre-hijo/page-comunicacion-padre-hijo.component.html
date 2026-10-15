@@ -1,0 +1,50 @@
+<!-- Incluimos el componente Navbar -->
+<app-navbar></app-navbar>
+
+<!-- Incluimos el componente Header -->
+<app-header [titulo]="'Ejemplo usuo input/outpu/signal en la comunicacion entre componentes'"></app-header>
+
+<div class="row mx-3 py-2">
+    <div class="col-auto">Persona Seleccionada: <b>{{personaSeleccionada()?.nombre | uppercase}}</b></div>    
+</div>
+<div class="row mx-3 pt-1 pb-2">
+    <div class="col-auto"><b>Filtrar (Paso info a la lista)</b></div>
+    <div class="col-2 text-end">
+        <label>
+            <!-- <input type="checkbox" class="mx-1"  name="checkBajas" #checkBajas value=true [(ngModel)]="filtrarBajas">Filtrar Bajas -->
+        </label>
+    </div>
+</div>
+
+<hr>
+
+<!-- Contenido Principal de la Página -->
+<main class="flex-grow-1">
+    <div class="mt-1 px-2">
+        
+        <div class="row">
+            <div class="col-6">
+                <app-lista-ejemplo 
+                    [listaPersonas]="listaPersonas()" 
+                    (outPersonaSeleccionada)="alSeleccionarPersona($event)">
+                </app-lista-ejemplo>
+            </div>
+            <div class="col-6">
+                <app-ficha-ejemplo
+                    [inPersona]="personaSeleccionada()"
+                    [inModo]="modoFicha()"
+                    (outGuardarPersona)="alGuardarPersona($event)"
+                    (outEditar)="editarPersona()"
+                    (outInsertar)="nuevaPersona()"
+                    (outCancelar)="cancelarEdicion()">
+                </app-ficha-ejemplo>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Incluimos el componente Footer -->
+<app-footer></app-footer>
+
+
+

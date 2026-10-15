@@ -1,8 +1,8 @@
 /* Ejemplo basico para ver la diferencia entre el uso de propiedades y señales */
 import { Component, signal } from '@angular/core';
-import { NavbarComponent } from '../../components/navbar/navbar.component';
-import { HeaderComponent } from '../../components/header/header.component';
-import { FooterComponent } from '../../components/footer/footer.component';
+import { NavbarComponent } from '../../../shared/components/navbar/navbar.component';
+import { HeaderComponent } from '../../../shared/components/header/header.component';
+import { FooterComponent } from '../../../shared/components/footer/footer.component';
 
 @Component({
   selector: 'app-page-contador',

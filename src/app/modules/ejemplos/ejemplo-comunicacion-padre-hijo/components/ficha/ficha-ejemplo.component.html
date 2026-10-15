@@ -1,0 +1,95 @@
+<section class="ms-1 me-4 mt-4">
+
+  <div class="mt-2">
+    <div class="card shadow-sm">
+
+        <!-- Cabecera -->
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Datos persona</h5>
+        </div>
+
+        <!-- Contenido -->
+        <div class="card-body">
+
+            <form [formGroup]="personaForm" (ngSubmit)="btnConfirmar()">
+
+            <div class="row">
+                    <!-- ID -->
+                    <div class="col-md-2 mb-1">
+                        <label class="form-label fw-bold">ID</label>
+                        <input type="text" class="form-control" 
+                        formControlName="id"
+                        readonly
+                        >
+                    </div>
+
+                    <!-- nombre -->
+                    <div class="col-md-10 mb-3">
+                        <label class="form-label fw-bold">Código</label>
+                        <input type="text" class="form-control"
+                        formControlName="nombre"
+                        [class.is-invalid]=" f['nombre'].invalid && (f['nombre'].touched || f['nombre'].dirty)"
+                        >
+                        @if (f['nombre'].invalid &&(f['nombre'].touched || f['nombre'].dirty)) {
+                        <div class="invalid-feedback">El nombre es obligatorio.</div>
+                        }
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Edad -->
+                    <div class="col-md-2 mb-3">
+                        <label class="form-label fw-bold">Edad</label>
+                        <input type="number" 
+                        class="form-control"
+                        formControlName="edad"
+                        [class.is-invalid]="f['edad'].invalid && (f['edad'].touched || f['edad'].dirty)"
+                        >
+                        @if (f['edad'].invalid && (f['edad'].touched || f['edad'].dirty)) {
+                        <div class="invalid-feedback">El edad es obligatoria.</div>
+                        }
+                    </div>
+
+                    <!-- Nacionalidad -->
+                    <div class="col-md-3 mb-3">
+                    <label class="form-label fw-bold">Nacionalidad</label>
+                    <input type="text"
+                        class="form-control"
+                        formControlName="nacionalidad"
+                    >
+                    </div>
+
+                    <!-- NIF -->
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label fw-bold">NIF</label>
+                        <input
+                        type="text" 
+                        class="form-control"
+                        formControlName="nif"
+                        >
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+
+
+        <div class="card-footer text-end">
+        <div class="botones">
+             @if (inModo() === 'ver') {
+                <button type="button" class="btn btn-primary ms-2" (click)="btnEditar()">Editar</button>              
+                <button type="button" class="btn btn-primary ms-2" (click)="btnInsertar()">Insertar</button>               
+            }          
+            @if (inModo() === 'editar' || inModo() === 'nuevo') {
+                <button type="button" class="btn btn-success ms-2" (click)="btnConfirmar()" [disabled]="personaForm.invalid">Confirmar</button>
+                <button type="button" class="btn btn-danger ms-2" (click)="btnCancelar()">Cancelar</button>
+            }
+        </div>
+        </div>            
+
+    </div>
+  </div>
+
+</section>
+
