@@ -1,5 +1,5 @@
-import { Injectable,  } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Injectable  } from '@angular/core';
+import { Observable, of, delay } from 'rxjs';
 import { map } from 'rxjs/operators'
 
 import { TramiteDiploma, TipoTramite, EstadoTramite } from '../models/diplomas.models';
@@ -72,6 +72,10 @@ export class DiplomasService {
 
   // obtener toda la lista de tramites disponibles ( con parametros opcionales)
   obtenerListaTramites(tipo?:TipoTramite, estado?:EstadoTramite): Observable<TramiteDiploma[]> {
+  // of(this.listaDiplomas): convierte la lista en un Observable.
+  // pipe(...): permite aplicar operadores de RxJS.
+  // map(...): transforma el contenido emitido.
+  // filter(...): filtra los trámites según las condiciones indicadas.    
     return of(this.listaDiplomas).pipe(
     map(tramites =>
       tramites.filter(tramite =>
@@ -83,13 +87,35 @@ export class DiplomasService {
   }
 
   // obtener un tramite especifico por su numero de expediente
-  obtenerTramite(expediente:string) {
+  obtenerTramite(expediente:string): Observable<TramiteDiploma | undefined> {
+    const usuario = this.listaDiplomas.find(u => u.expediente === expediente);
+    return of(usuario).pipe(
+      delay(500)
+    );    
 
   }
 
   // metodo para actualizar los valores de un tramite
   actualizarTramite(tramite:TramiteDiploma) {
+    const indice = this.listaDiplomas.findIndex( t => t.expediente === tramite.expediente );
+    if (indice === -1) {
+      return of(undefined);
+    }
+    this.listaDiplomas[indice] = { ...tramite };
+    return of(this.listaDiplomas[indice]).pipe(
+      delay(500)
+    );
+  }
 
+  actualizarEstadoTramite(tramite:TramiteDiploma, newEstado: EstadoTramite): Observable<TramiteDiploma | undefined> {
+    const indice = this.listaDiplomas.findIndex( t => t.expediente === tramite.expediente );
+    if (indice === -1) {
+      return of(undefined);
+    }
+    this.listaDiplomas[indice].estadoActual = newEstado;
+    return of(this.listaDiplomas[indice]).pipe(
+      delay(500)
+    );
   }
 
   // metodo para insertar un nuevo tramite

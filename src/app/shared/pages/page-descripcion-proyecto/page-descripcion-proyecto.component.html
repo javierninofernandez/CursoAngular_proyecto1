@@ -1,1 +1,20 @@
-<p>page-descripcion-proyecto works!</p>
+<div class="page-container">
+  <!-- Navbar -->
+  <app-navbar></app-navbar>
+
+  <!-- Header -->
+  <app-header [titulo]="'Descripcion contenido proyecto'"></app-header>
+
+  <!-- Contenido principal -->
+  <main class="main-content">
+    <div class="pdf-container">
+      <iframe
+        src="/doc/Breve_resumen_contenido_proyecto.pdf"
+        title="Visor de PDF">
+      </iframe>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <app-footer></app-footer>
+</div>

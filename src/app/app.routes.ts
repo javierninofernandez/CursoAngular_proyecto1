@@ -13,6 +13,7 @@ import { LoginComponent } from './core/auth/pages/login/login.component';
 import { authGuard } from './core/auth/auth.guards'
 import { PageComunicacionPadreHijoComponent } from './modules/ejemplos/ejemplo-comunicacion-padre-hijo/page-comunicacion-padre-hijo/page-comunicacion-padre-hijo.component';
 import { PageDiplomasComponent } from './modules/diplomas/pages/page-diplomas/page-diplomas.component';
+import { PageDescripcionProyectoComponent } from './shared/pages/page-descripcion-proyecto/page-descripcion-proyecto.component';
 
 
 export const routes: Routes = [
@@ -20,9 +21,10 @@ export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
 
-    { path:'home', component:HomeComponent, canActivate: [authGuard]},    //localhost:4200/home
-    { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] },
-
+    { path:'home', component:HomeComponent},    //localhost:4200/home
+    { path: 'dashboard', component: DashboardComponent },
+    { path: 'documentacion', component: PageDescripcionProyectoComponent },
+    
     // ejemplos pùntuales
     { path: 'contador', component: PageContadorComponent, canActivate: [authGuard] },
     { path: 'ejemplo-comunicacion', component: PageComunicacionPadreHijoComponent, canActivate: [authGuard] },

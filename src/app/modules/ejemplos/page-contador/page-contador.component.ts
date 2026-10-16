@@ -11,9 +11,9 @@ import { FooterComponent } from '../../../shared/components/footer/footer.compon
   styleUrl: './page-contador.component.css'
 })
 export class PageContadorComponent {
-  contador = 0;
+  contador: number = 0;
   // las señales se identifican por signal()
-  countadorSignal = signal(0);
+  countadorSignal = signal<number>(0);
 
   constructor() {}
 

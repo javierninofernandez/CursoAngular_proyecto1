@@ -31,11 +31,12 @@ export class NavbarComponent {
   constructor(private router: Router) {}
 
   titulo = 'Gestor Clientes';
-  
+
   // Lista de elementos del menu / Permite subdivision en submenu de 1 nivel
   listaRutas: MenuItem[] = [
-    //{ titulo: 'Home', path: '/home', icono: 'bi bi-house-door-fill mx-1', hint: 'Ir a la página de inicio', isDisabled: false },
-    { titulo: 'Dashboard', path: '/dashboard', icono: 'bi bi-easel-fill mx-1 mx-1', hint: 'Ver el panel de control', isDisabled: false },
+    { titulo: 'Home', path: '/home', icono: 'bi bi-house-door-fill mx-1', hint: 'Ir a la página de inicio', isDisabled: false },
+    { titulo: 'Dashboard', path: '/dashboard', icono: 'bi bi-easel-fill mx-1', hint: 'Ver el panel de control', isDisabled: false },
+    { titulo: 'Documentacion', path: '/documentacion', icono: 'bi bi-file-earmark-pdf-fill mx-1', hint: 'Descripcion del proyecto', isDisabled: false },
     { titulo: 'Ejemplos', icono: '<i class="bi bi-hexagon-fill"></i>', hint: 'pruebas', isDisabled: false, 
         hijos: [
           { titulo: 'Contador (signals)', path: '/contador', icono: 'bi bi-123 mx-1', hint: 'Ver el panel de control', isDisabled: false },
@@ -83,6 +84,6 @@ export class NavbarComponent {
     localStorage.clear();    // Aquí puedes limpiar sesión/token
   
     // Redirigir al usuario a la página de inicio (ej Login)
-    this.router.navigate(['/home']);
+    this.router.navigate(['/login']);
   }
 }

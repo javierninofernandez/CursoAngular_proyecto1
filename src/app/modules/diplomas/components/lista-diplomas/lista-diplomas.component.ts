@@ -10,6 +10,7 @@ import { TramiteDiploma, EstadoTramite, TipoTramite } from '../../models/diploma
 import { NgClass, NgPlural } from "@angular/common";
 import { FormsModule } from '@angular/forms';
 import { SelectModule } from 'primeng/select';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -45,10 +46,10 @@ export class ListaDiplomasComponent {
 ];
 
   ngOnInit(){
-    this.getListaEmpresas()
+    this.getListaTramites()
   }
 
-    getListaEmpresas(tipo?:TipoTramite, estado?:EstadoTramite): void {
+    getListaTramites(tipo?:TipoTramite, estado?:EstadoTramite): void {
       this.diplomasService.obtenerListaTramites(tipo,estado).subscribe({
         next: (tramites) => {
           this.listaTramites = tramites;
@@ -64,8 +65,16 @@ export class ListaDiplomasComponent {
     }  
 
 
-    cambiarEstadoTramite(tramite:DiplomasService,newEstado:EstadoTramite) {
-        
+    cambiarEstadoTramite(tramite:TramiteDiploma,newEstado:EstadoTramite) {
+      this.diplomasService.actualizarEstadoTramite(tramite,newEstado).subscribe({
+        next: (tramite) => {
+          alert('tramite Actualizado');
+          this.getListaTramites();
+        },
+        error: (error) => {
+          console.error('Error obteniendo empresas:', error);
+        }        
+      })        
     }
 
     //#region - eventos p-table de primeNg 

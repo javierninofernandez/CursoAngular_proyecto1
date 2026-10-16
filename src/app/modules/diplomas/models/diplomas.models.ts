@@ -34,5 +34,5 @@ export interface TramiteDiploma {
     origen : 'ACTIVO' | 'BAJA'
     docValida: boolean;
     estadoActual : EstadoTramite;
-
 }
+
